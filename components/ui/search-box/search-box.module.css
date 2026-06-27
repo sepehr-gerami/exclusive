@@ -1,0 +1,44 @@
+/* From Uiverse.io by Praashoo7 */ 
+.input {
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  padding: 0.5em 2em;
+  background-color: #ccc;
+  box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+  transition: 300ms ease-in-out;
+  color: #111;
+  width: 100%;
+}
+
+.input::placeholder {
+  color: #5e5e5e;
+  opacity: 1;
+  font-size: 14px;
+}
+
+/* وقتی input فوکوس شد */
+.input:focus {
+  background-color: white;
+  transform: scale(1.01);
+  box-shadow: 13px 13px 100px #969696,
+             -13px -13px 100px #ffffff;
+}
+
+/* آیکون */
+.icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #272729;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+/* تغییر رنگ آیکون وقتی input فوکوس میشه */
+.group:focus-within .icon {
+  color: #000;
+}

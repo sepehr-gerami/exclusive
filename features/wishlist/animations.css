@@ -1,0 +1,61 @@
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(.85);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  75% {
+    transform: scale(.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heart-animation {
+  animation: heartBeat .5s ease;
+}
+
+@keyframes tooltip {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+.tooltip-animation{
+    animation: tooltip .3s ease forwards;
+}
+
+@keyframes circle {
+
+    from{
+        transform:scale(.6);
+        opacity:1;
+    }
+
+    to{
+        transform:scale(1.8);
+        opacity:0;
+    }
+
+}
+
+.circle-animation{
+    animation:circle .8s forwards;
+}
