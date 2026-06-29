@@ -1,7 +1,7 @@
 "use client";
 
 import { useWishlistStore } from "@/store/useWishlistStore";
-import vector from "@/app/assets/Vector(1).svg";
+import vector from "@/app/assets/icon/Vector(1).svg";
 import Image from "next/image";
 import { Product } from "@/types/Product";
 
@@ -53,8 +53,8 @@ export default function Wishlist({ product }: WishlistButtonProps) {
       <span className="relative z-10 transition-all duration-200 group-hover:pl-2">
         <Image
           src={vector}
-          width={26}
-          height={26}
+          width={20}
+          height={20}
           alt="Wishlist"
           className={`
             transition-all duration-200 

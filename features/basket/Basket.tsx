@@ -1,7 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/cartStore";
-import  ShoppingCart  from "@/app/assets/Cart1.svg";
+import  ShoppingCart  from "@/app/assets/icon/Cart1.svg";
 import Image from "next/image";
 export default function Basket() {
   const items = useCartStore((state) => state.items);
@@ -44,8 +44,8 @@ export default function Basket() {
       <span className="relative z-10 transition-all duration-200 group-hover:pl-2">
         <Image
           src={ShoppingCart}
-          width={26}
-          height={26}
+          width={23}
+          height={23}
           alt="ShoppingCart"
           className="transition-transform duration-200 group-hover:scale-110"
         />

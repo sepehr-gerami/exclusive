@@ -5,7 +5,7 @@ export const NAV_LINKS = [
   },
   {
     title: "Contact",
-    href: "/Contact",
+    href: "/contact",
   },
   {
     title: "About",
@@ -13,6 +13,6 @@ export const NAV_LINKS = [
   },
   {
     title: "Sign Up",
-    href: "/Sign-Up",
+    href: "/sign-Up",
   },
 ];
