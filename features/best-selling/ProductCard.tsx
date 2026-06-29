@@ -4,15 +4,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Heart, Eye } from "lucide-react";
+import { Eye } from "lucide-react";
 import { Product } from "@/types/Product";
+import WishlistButton from "@/components/product/WishlistButton";
+import QuickViewModal from "@/components/ui/QuickViewModal";
+import { useState } from "react";
 
 export default function ProductCard({ product }: { product: Product }) {
   const originalPrice =
     product.discount > 0
       ? (product.price / (1 - product.discount / 100)).toFixed(0)
       : null;
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <Link
       href={`/product/${product.id}`}
@@ -29,21 +32,26 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* ── Action icons (heart + eye) ── */}
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
+        <WishlistButton />
         <button
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsOpen(true);
+          }}
           className="w-8 h-8 bg-white rounded-full flex items-center justify-center
-                     shadow hover:bg-red-500 hover:text-white transition"
-        >
-          <Heart size={14} />
-        </button>
-        <button
-          onClick={(e) => e.preventDefault()}
-          className="w-8 h-8 bg-white rounded-full flex items-center justify-center
-                     shadow hover:bg-red-500 hover:text-white transition"
+                  shadow hover:bg-red-500 hover:text-white transition"
         >
           <Eye size={14} />
         </button>
       </div>
+
+      {isOpen && (
+        <QuickViewModal
+          product={product}
+          onClose={() => setIsOpen(false)}  // ← اینجا false
+        />
+      )}
 
       {/* ── Image + Add to Cart hover ── */}
       <div className="relative h-44 overflow-hidden">

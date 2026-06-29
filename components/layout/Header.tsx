@@ -2,8 +2,8 @@
 import Link from 'next/link'
 import React from 'react'
 import Navbar from './Navbar'
-import Wishlist from '@/features/Wishlist';
-import Basket from '@/features/Basket';
+import Wishlist from '@/features/wishlist/Wishlist';
+import Basket from '@/features/basket/Basket';
 import SearchInput from '../ui/search-box/SearchInput';
 
 

@@ -8,6 +8,9 @@ import HeroBannerSkeleton from "@/components/ui/HeroBannerSkeleton";
 import BestSellingSection from "@/features/best-selling/BestSellingSection";
 import ExploreProductsSection from "@/components/ui/ExploreProductsSection";
 import HeroBannerFooter from "@/components/ui/HeroBannerFooter";
+import NewArrivals from "@/features/new-arrivals/NewArrivals";
+import ServiceStrip from "@/features/services/ServiceStrip";
+
 
 export default function Home() {
   return (
@@ -27,15 +30,14 @@ export default function Home() {
       <Suspense fallback={<FlashSaleSkeleton />}>
         <FlashSalesServer />
       </Suspense>
-
-      <Suspense fallback={<div>Loading categories...</div>}>
         <Categories />
-      </Suspense>
-     <BestSellingSection />
-       <div className="container mx-auto px-4 py-8 space-y-16">
-      <HeroBannerFooter />
-      <ExploreProductsSection />
-    </div>
+      <BestSellingSection />
+      <div className="container mx-auto px-4 py-8 space-y-16">
+        <HeroBannerFooter />
+        <ExploreProductsSection />
+        <NewArrivals />
+        <ServiceStrip />
+      </div>
     </main>
   );
 }

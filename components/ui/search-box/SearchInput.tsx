@@ -1,25 +1,27 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { BiSearch } from "react-icons/bi";
 import { FiX } from "react-icons/fi";
 import { Product } from "@/types/Product";
 import { getProducts } from "@/lib/api/Product";
+import styles from "@/components/ui/search-box/search-box.module.css";
 
 export default function SearchInput() {
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     getProducts().then(setProducts);
   }, []);
 
-  const results = products.filter((p) =>
-    p.title.toLowerCase().includes(query.toLowerCase())
-  );
+  const results = products
+    .filter((p) => p.title.toLowerCase().includes(query.toLowerCase()))
+    .slice(0, 8);
 
   const clearSearch = () => {
     setQuery("");
@@ -27,42 +29,36 @@ export default function SearchInput() {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative w-72">
+    <div ref={dropdownRef} className={styles.wrapper}>
       {/* INPUT */}
-      <div className="relative">
-        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+      <div className={styles.shell}>
+        <span className={styles.iconLeft}>
           <BiSearch />
-        </div>
-
+        </span>
 
         <input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setIsOpen(true);
+          }}
           onFocus={() => setIsOpen(true)}
           placeholder="Search products..."
-          className="w-full rounded-xl bg-gray-200 py-2 pl-10 pr-10 text-gray-800 outline-none transition focus:bg-white focus:shadow-lg focus:scale-[1.01]"
+          className={styles.input}
         />
 
-        {/* ❌ CLEAR BUTTON */}
         {query && (
-          <button
-            onClick={clearSearch}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black"
-          >
+          <button onClick={clearSearch} className={styles.clearBtn}>
             <FiX />
           </button>
         )}
@@ -70,19 +66,31 @@ export default function SearchInput() {
 
       {/* DROPDOWN */}
       {isOpen && query && (
-        <div className="absolute top-full mt-2 w-full rounded-2xl bg-white shadow-lg max-h-80 overflow-y-auto z-50">
+        <div className={styles.dropdown}>
           {results.length > 0 ? (
             results.map((product) => (
-              <div
+              <Link
                 key={product.id}
-                className="px-4 py-3 cursor-pointer hover:bg-gray-100"
+                href={`/product/${product.id}`}
+                onClick={clearSearch}
+                className={styles.item}
               >
-                {product.title}
-              </div>
+                <Image
+                  src={product.thumbnail}
+                  alt={product.title}
+                  width={38}
+                  height={38}
+                  className={styles.thumb}
+                />
+                <div className={styles.itemInfo}>
+                  <span className={styles.itemTitle}>{product.title}</span>
+                  <span className={styles.itemPrice}>${product.price}</span>
+                </div>
+              </Link>
             ))
           ) : (
-            <div className="px-4 py-3 text-gray-500">
-              Product not found
+            <div className={styles.empty}>
+              No results for &ldquo;{query}&rdquo;
             </div>
           )}
         </div>

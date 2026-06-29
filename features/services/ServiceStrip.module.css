@@ -1,0 +1,99 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .wrapper {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  background: #f0f0f0;
+  box-shadow:
+    8px 8px 20px rgba(0, 0, 0, 0.12),
+    -6px -6px 16px rgba(255, 255, 255, 0.9);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  cursor: default;
+  perspective: 600px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card:hover {
+  transform: translateY(-6px) rotateX(4deg) rotateY(-3deg) scale(1.03);
+  box-shadow:
+    14px 18px 32px rgba(0, 0, 0, 0.15),
+    -8px -8px 20px rgba(255, 255, 255, 1);
+}
+
+.iconWrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #e8e8e8;
+  box-shadow:
+    inset 4px 4px 10px rgba(0, 0, 0, 0.15),
+    inset -4px -4px 10px rgba(255, 255, 255, 0.9),
+    6px 6px 16px rgba(0, 0, 0, 0.1),
+    -4px -4px 12px rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover .iconWrap {
+  box-shadow:
+    inset 5px 5px 12px rgba(0, 0, 0, 0.18),
+    inset -5px -5px 12px rgba(255, 255, 255, 1),
+    8px 8px 20px rgba(0, 0, 0, 0.12),
+    -5px -5px 14px rgba(255, 255, 255, 1);
+}
+
+.iconInner {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow:
+    3px 3px 8px rgba(0, 0, 0, 0.3),
+    -2px -2px 6px rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover .iconInner {
+  transform: scale(1.1);
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: #111;
+  margin: 0;
+}
+
+.desc {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+  margin-top: -0.5rem;
+}
