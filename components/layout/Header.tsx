@@ -1,6 +1,5 @@
 "use client";
 import Link from 'next/link'
-import React from 'react'
 import Navbar from './Navbar'
 import Wishlist from '@/features/wishlist/Wishlist';
 import Basket from '@/features/basket/Basket';
@@ -16,11 +15,11 @@ export default function Header() {
 
   <Navbar />
 
-  <div className="flex items-center gap-15">
+  <div className="flex items-center  gap-15">
     <SearchInput/>
     {/* <SearchBox /> */}
     
-    <div className="flex items-center gap-8 mr-8">
+    <div className="flex items-center  mr-8">
       <Wishlist />
       <Basket />
     </div>
