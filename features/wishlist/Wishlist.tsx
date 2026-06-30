@@ -1,9 +1,8 @@
 "use client";
 
 import { useWishlistStore } from "@/store/useWishlistStore";
-import vector from "@/app/assets/icon/Vector(1).svg";
-import Image from "next/image";
 import { Product } from "@/types/Product";
+import { Heart } from "lucide-react";
 
 interface WishlistButtonProps {
   product?: Product; // ✅ optional
@@ -51,8 +50,7 @@ export default function Wishlist({ product }: WishlistButtonProps) {
 
       {/* Icon — ✅ رنگ عوض می‌شه وقتی در wishlist باشه */}
       <span className="relative z-10 transition-all duration-200 group-hover:pl-2">
-        <Image
-          src={vector}
+        <Heart size={48} color="#ff0000" strokeWidth={3} absoluteStrokeWidth 
           width={20}
           height={20}
           alt="Wishlist"

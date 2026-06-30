@@ -1,7 +1,33 @@
+"use client"
 import Link from "next/link";
 import { SendHorizontal } from 'lucide-react';
-import { FaTwitter, FaInstagram, FaLinkedinIn, FaFacebook,FaGooglePlay, FaApple } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaLinkedinIn, FaFacebook, FaGooglePlay, FaApple } from "react-icons/fa";
 import Image from "next/image";
+import { useState } from "react";
+import Alert from "../ui/Alert";
+
+type FieldKey = "email";
+interface AlertProps {
+  show: boolean
+  onClose: () => void
+  duration?: number
+}
+const rules: Record<
+  FieldKey,
+  {
+    validate: (v: string) => boolean;
+    empty: string;
+    error: string;
+    ok: string;
+  }
+> = {
+  email: {
+    validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+    empty: "Email is required",
+    error: "Please enter a valid email (e.g. name@example.com)",
+    ok: "Valid email ✓",
+  },
+};
 const sections = [
   {
     title: "Support",
@@ -40,6 +66,38 @@ const socials = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertType, setAlertType] = useState<"success" | "warn">("success");
+  const [alertTitle, setAlertTitle] = useState("");
+  const [alertSub, setAlertSub] = useState("");
+
+  const handleSubscribe = () => {
+    const value = email.trim();
+
+    if (!value) {
+      setAlertType("warn");
+      setAlertTitle("Email is empty");
+      setAlertSub("Email is required");
+      setShowAlert(true);
+      return;
+    }
+
+    if (!rules.email.validate(value)) {
+      setAlertType("warn");
+      setAlertTitle("Invalid email");
+      setAlertSub("Please enter a valid email (e.g. name@example.com)");
+      setShowAlert(true);
+      return;
+    }
+
+    setAlertType("success");
+    setAlertTitle("Subscribed");
+    setAlertSub("Thanks for subscribing to our newsletter");
+    setShowAlert(true);
+
+    setEmail("");
+  };
   return (
     <footer className="bg-[#1a1a1a] text-gray-300 mt-20">
       <div className="container mx-auto px-6 py-16">
@@ -55,12 +113,23 @@ export default function Footer() {
 
             {/* Email input */}
             <div className="flex items-center border border-gray-500 rounded-md overflow-hidden mt-1">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="bg-transparent text-sm text-gray-300 placeholder-gray-500 px-3 py-2 flex-1 outline-none"
-              />
-              <button className="px-1 py- text-white cursor-pointer hover:text-red-400 transition">
+              <div className="flex items-center border border-gray-500 rounded-md overflow-hidden focus-within:border-blue-400 transition-colors">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  placeholder="Enter your email"
+                  className="bg-transparent text-sm text-gray-300 placeholder-gray-500 px-3 py-2 flex-1 outline-none"
+                />
+              </div>
+
+
+              <button
+                type="button"
+                onClick={handleSubscribe}
+                className="px-1 py- text-white cursor-pointer hover:text-red-400 transition">
                 <SendHorizontal size={18} />
               </button>
             </div>
@@ -107,7 +176,7 @@ export default function Footer() {
                   href="#"
                   className="flex items-center gap-1.5 border border-gray-500 rounded px-2 py-1 hover:border-white transition"
                 >
-                  <FaGooglePlay/>
+                  <FaGooglePlay />
                   <span className="text-[10px] leading-tight text-gray-300">
                     GET IT ON<br />
                     <span className="font-semibold text-white text-xs">Google Play</span>
@@ -117,7 +186,7 @@ export default function Footer() {
                   href="#"
                   className="flex items-center gap-1.5 border border-gray-500 rounded px-2 py-1 hover:border-white transition"
                 >
-                  <FaApple/>
+                  <FaApple />
                   <span className="text-[10px] leading-tight text-gray-300">
                     Download on the<br />
                     <span className="font-semibold text-white text-xs">App Store</span>
@@ -146,6 +215,14 @@ export default function Footer() {
       <div className="border-t border-gray-700 py-5 text-center text-xs text-gray-500">
         © Copyright Rimel 2022. All right reserved
       </div>
+      <Alert
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        title={alertTitle}
+        sub={alertSub}
+      />
     </footer>
   );
 }
+
+

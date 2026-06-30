@@ -123,24 +123,6 @@ export default function QuickViewModal({ product, onClose }: Props) {
           {/* Quantity */}
           <div className="flex items-center gap-4">
             <span className="text-sm font-medium text-gray-700">Qty</span>
-            {/* <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
-              <button
-                
-                className="px-4 py-2 text-lg hover:bg-gray-100 transition"
-              >
-                −
-              </button>
-              <span className="px-5 py-2 font-semibold text-sm border-x border-gray-200">
-                {qty}
-              </span>
-              <button
-                
-                disabled={product.stock === 0}
-                className="px-4 py-2 text-lg hover:bg-gray-100 transition disabled:opacity-40"
-              >
-                +
-              </button>
-            </div> */}
           </div>
 
           {/* Actions */}

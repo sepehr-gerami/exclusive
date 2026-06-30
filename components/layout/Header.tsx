@@ -15,9 +15,9 @@ export default function Header() {
 
   <Navbar />
 
+    {/* <SearchBox /> */}
   <div className="flex items-center  gap-15">
     <SearchInput/>
-    {/* <SearchBox /> */}
     
     <div className="flex items-center  mr-8">
       <Wishlist />

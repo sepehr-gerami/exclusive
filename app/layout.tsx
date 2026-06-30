@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import  Header  from "@/components/layout/Header";
-import  Footer from "@/components/layout/Footer";
-import  TopHeader from "@/components/layout/TopHeader";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import TopHeader from "@/components/layout/TopHeader";
 import ScrollToTop from "@/components/ui/ScrollToTop";
 
 export const metadata: Metadata = {
@@ -17,14 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" dir="ltr">
-     <body>
-      <TopHeader/>
+      <body>
+        <TopHeader />
         <Header />
         <main>{children}</main>
-         <ScrollToTop />
+        <ScrollToTop />
         <Footer />
-     </body>
-      
+      </body>
+
     </html>
   );
 }

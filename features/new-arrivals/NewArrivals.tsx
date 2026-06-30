@@ -8,7 +8,7 @@ type Item = {
   title: string;
   description: string;
   href: string;
-  image: StaticImageData | string;  // ✅ هر دو نوع
+  image: StaticImageData | string;  
   size: "large" | "medium" | "small";
 };
 
@@ -34,7 +34,7 @@ const items: Item[] = [
     title: "Speakers",
     description: "Amazon wireless speakers",
     href: "/product?category=speakers",
-    image: "/category/Frame%20707.svg",                        // ✅ string path
+    image: "/category/Frame%20707.svg",                        
     size: "small",
   },
   {
@@ -42,7 +42,7 @@ const items: Item[] = [
     title: "Perfume",
     description: "GUCCI INTENSE OUD EDP",
     href: "/product?category=perfume",
-    image: "/category/652e82cd70aa6522dd785109a455904c.svg",   // ✅ string path
+    image: "/category/652e82cd70aa6522dd785109a455904c.svg",   
     size: "small",
   },
 ];
