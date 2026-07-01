@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import StatsSection from '@/components/ui/StatsSection' // مسیر را با پروژه‌ات تطبیق بده
-import TeamSection from '@/components/ui/TeamSection' // مسیر را با پروژه‌ات تطبیق بده
+import StatsSection from '@/components/ui/StatsSection'
+import TeamSection from '@/components/ui/TeamSection' 
 import ServiceStrip from '@/features/services/ServiceStrip'
 
 export default function page() {

@@ -13,6 +13,6 @@ export const NAV_LINKS = [
   },
   {
     title: "Sign Up",
-    href: "/sign-Up",
+    href: "/sign-up",
   },
 ];

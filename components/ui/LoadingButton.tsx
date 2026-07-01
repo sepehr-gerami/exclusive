@@ -1,14 +1,16 @@
 "use client"
-
-export default function LoadingButton({ isLoading, onClick }: {
-  isLoading: boolean
-  onClick?: () => void
-}) {
+interface ButtonProps {
+  isLoading: boolean;
+  onClick?: () => void;
+  loadingText?: string;
+  text: string;
+}
+export default function LoadingButton({ isLoading, loadingText,text, onClick }: ButtonProps) {
   return (
     <button
       onClick={onClick}
       disabled={isLoading}
-      className="flex items-center gap-2 bg-red-500 hover:bg-red-600
+      className="flex justify-center items-center w-full text-start gap-2 bg-red-500 hover:bg-red-600
         disabled:opacity-70 disabled:cursor-not-allowed
         text-white px-10 py-3 rounded text-sm font-medium transition"
     >
@@ -21,7 +23,7 @@ export default function LoadingButton({ isLoading, onClick }: {
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
         </svg>
       )}
-      {isLoading ? "Sending..." : "Send Message"}
+      {isLoading ? (loadingText ?? "loading...") : text}
     </button>
   )
 }
