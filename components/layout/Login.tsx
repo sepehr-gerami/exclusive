@@ -2,21 +2,25 @@
 import Image from "next/image";
 import Link from "next/link";
 import AuthImage from "@/public/auth/SideImage.svg";
-import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
+import { EyeOff, Eye } from 'lucide-react';
+import { useRouter } from "next/navigation";
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^\d{10,15}$/;
 
 const rules = {
     email: {
         validate: (v: string) =>
-            /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
-        empty: "Email is required",
-        error: "Email is invalid",
+            emailRegex.test(v) || phoneRegex.test(v),
+        empty: "Please enter your email or phone number.",
+        error: "Please enter a valid email address or phone number.",
     },
+
     password: {
         validate: (v: string) => v.length >= 8,
-        empty: "Password is required",
-        error: "Password must be at least 8 characters",
+        empty: "Please enter your password.",
+        error: "Password must be at least 8 characters long.",
     },
 };
 
@@ -44,7 +48,19 @@ export default function LoginPage() {
 
     const [toasts, setToasts] = useState<Toast[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passRef = useRef<HTMLInputElement>(null);
+    const [showPassword, setShowPassword] = useState(false);
+     const router = useRouter();
+    const handleEnter = (
+        e: React.KeyboardEvent<HTMLInputElement>,
+        nextRef: React.RefObject<HTMLInputElement | null> | null,
+    ) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            nextRef?.current?.focus();
+        }
+    };
     const validateField = (key: FieldKey, val: string): FieldState => {
         if (!val.trim()) return "empty";
         if (!rules[key].validate(val)) return "error";
@@ -68,8 +84,7 @@ export default function LoginPage() {
         }, 3000);
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleSubmitForm = async () => {
 
         const keys: FieldKey[] = ["email", "password"];
 
@@ -87,7 +102,7 @@ export default function LoginPage() {
                 id: "error-" + Date.now(),
                 type: "error",
                 title: "Validation Error",
-                sub: "Please fix the highlighted fields",
+                sub: "Please correct the highlighted fields and try again.",
             });
             return;
         }
@@ -101,12 +116,19 @@ export default function LoginPage() {
         addToast({
             id: "success-" + Date.now(),
             type: "success",
-            title: "Success",
-            sub: "Account created successfully",
+            title: "Account Created",
+            sub: "Your account has been created successfully.",
         });
 
         setValues({ email: "", password: "" });
         setStates({ email: "idle", password: "idle" });
+        setTimeout(() => {
+  router.push("/");
+}, 1000);
+    };
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        await handleSubmitForm();
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -158,6 +180,8 @@ export default function LoginPage() {
 
                         {/* EMAIL */}
                         <input
+                            ref={emailRef}
+                            onKeyDown={(e) => handleEnter(e, passRef)}
                             value={values.email}
                             onChange={(e) =>
                                 handleChange("email", e.target.value)
@@ -183,22 +207,27 @@ focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
                         />
                         {states.email === "error" && (
                             <p className="text-red-500 text-sm">
-                                Email is invalid
+                                {rules.email.error}
                             </p>
                         )}
 
                         {/* PASSWORD */}
-                        <input
-                            type="password"
-                            value={values.password}
-                            onChange={(e) =>
-                                handleChange("password", e.target.value)
-                            }
-                            className="
+                        <div>
+
+                            <div className=" relative">
+
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    ref={passRef}
+                                    value={values.password}
+                                    onChange={(e) =>
+                                        handleChange("password", e.target.value)
+                                    }
+                                    className="
+w-full
+pr-12
 border-0
 outline-none
-focus:outline-none
-focus:ring-0
 rounded-[15px]
 p-[1em]
 bg-[#ccc]
@@ -206,20 +235,29 @@ shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
 transition-all
 duration-300
 ease-in-out
-
 focus:bg-white
 focus:scale-105
 focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
 "
-                            placeholder="Password"
-                        />
-                        {states.password === "error" && (
-                            <p className="text-red-500 text-sm">
-                                Password is invalid
-                            </p>
-                        )}
-                    </div>
+                                    placeholder="Password"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-black transition"
+                                >
+                                    {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                                </button>
+                            </div>
 
+                            {states.password === "error" && (
+                                <p className="text-red-500 text-sm">
+                                    {rules.password.error}
+                                </p>
+                            )}
+                        </div>
+
+                    </div>
 
                     <div className="flex flex-row items-center justify-center gap-15">
 
