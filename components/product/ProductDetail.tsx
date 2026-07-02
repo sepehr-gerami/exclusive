@@ -93,6 +93,7 @@ export default async function ProductDetail({ id }: { id: string }) {
         {/* Actions */}
         <div className="flex items-center gap-3 mt-2">
           <button
+          
             disabled={product.stock === 0}
             className="flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-medium transition"
           >

@@ -1,9 +1,9 @@
 "use client";
 
-import { useCartStore } from "@/store/cartStore";
+
 import { ShoppingCart } from "lucide-react";
 export default function Basket() {
-  const items = useCartStore((state) => state.items);
+  const items = [];
 
   
   return (

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { NAV_LINKS } from "@/constants/nav-links";
 
 export default function Navbar() {
+    
     return (
         <nav className="flex items-center gap-2">
             {NAV_LINKS.map((link) => (
