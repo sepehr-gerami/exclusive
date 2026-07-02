@@ -7,14 +7,13 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import WishlistButton from "@/components/product/WishlistButton";
-import { useShopStore } from "@/store/useWishlistStore";
+
 
 type Props = {
   product: Product;
 };
 
 export default function ProductCard({ product }: Props) {
-  const addToBasket = useShopStore((s) => s.addToBasket)
   const [isOpen, setIsOpen] = useState(false);
 
 
@@ -56,7 +55,6 @@ export default function ProductCard({ product }: Props) {
           />
           {/* slides up on hover */}
           <button
-            onClick={() => addToBasket(product)}
             className="absolute bottom-0 left-0 cursor-pointer right-0 py-2.5 bg-black text-white
                                text-sm font-medium text-center
                                translate-y-full group-hover:translate-y-0

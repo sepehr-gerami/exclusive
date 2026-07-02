@@ -1,32 +1,32 @@
 "use client";
 
-import { useWishlistStore } from "@/store/useWishlistStore";
+// import { useWishlistStore } from "@/store/useWishlistStore";
 import { Product } from "@/types/Product";
 import { Heart } from "lucide-react";
 
 interface WishlistButtonProps {
-  product?: Product; // ✅ optional
+  product?: Product; 
 }
 
 export default function Wishlist({ product }: WishlistButtonProps) {
-  const addToWishlist      = useWishlistStore((state) => state.addToWishlist);
-  const removeFromWishlist = useWishlistStore((state) => state.removeFromWishlist);
+  // const addToWishlist      = ((state) => state.addToWishlist);
+  // const removeFromWishlist = ((state) => state.removeFromWishlist);
 
-  // ✅ اگر product نداشت، false برگردون
-  const isInWishlist = useWishlistStore((state) =>
-    product ? state.items.some((item) => item.id === product.id) : false
-  );
-  const totalItems = useWishlistStore((state) => state.items.length);
+  // // ✅ اگر product نداشت، false برگردون
+  // const isInWishlist = useWishlistStore((state) =>
+  //   product ? state.items.some((item) => item.id === product.id) : false
+  // );
+  // const totalItems = useWishlistStore((state) => state.items.length);
 
-  const handleToggle = () => {
-    if (!product) return; // ✅ guard — در Header کاری نکن
-    isInWishlist ? removeFromWishlist(product.id) : addToWishlist(product);
-  };
+  // const handleToggle = () => {
+  //   if (!product) return; // ✅ guard — در Header کاری نکن
+  //   isInWishlist ? removeFromWishlist(product.id) : addToWishlist(product);
+  // };
 
   return (
     <button
-      onClick={handleToggle}
-      aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+      // onClick={handleToggle}
+      // aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
       className="group relative px-4 py-2 cursor-pointer transition-all duration-200 hover:text-red-600"
     >
       {/* Hover Background */}
@@ -48,26 +48,25 @@ export default function Wishlist({ product }: WishlistButtonProps) {
         group-hover:w-9
       "/>
 
-      {/* Icon — ✅ رنگ عوض می‌شه وقتی در wishlist باشه */}
       <span className="relative z-10 transition-all duration-200 group-hover:pl-2">
         <Heart size={48} color="#ff0000" strokeWidth={3} absoluteStrokeWidth 
           width={20}
           height={20}
           alt="Wishlist"
-          className={`
-            transition-all duration-200 
-            group-hover:scale-110
-            ${isInWishlist ? "opacity-100 filter-[invert(27%)_sepia(90%)_saturate(700%)_hue-rotate(330deg)]" : "opacity-70"}
-          `}
+          // className={`
+          //   transition-all duration-200 
+          //   group-hover:scale-110
+          //   ${isInWishlist ? "opacity-100 filter-[invert(27%)_sepia(90%)_saturate(700%)_hue-rotate(330deg)]" : "opacity-70"}
+          // `}
         />
       </span>
 
       {/* Badge — ✅ تعداد کل wishlist */}
-      {totalItems > 0 && (
+      {/* {totalItems > 0 && (
         <span className="absolute -top-1 -right-1 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
           {totalItems}
         </span>
-      )}
+      )} */}
     </button>
   );
 }
