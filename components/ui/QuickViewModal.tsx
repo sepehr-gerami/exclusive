@@ -4,17 +4,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { X, Star, ShoppingCart } from "lucide-react";
 import { Product } from "@/types/Product";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import WishlistButton from "@/components/product/WishlistButton";
+import AddToCartButton from "@/components/product/AddToCartButton";
 
 type Props = {
   product: Product;
-  onClose: () => void;
+  onCloseAction: () => void;
 };
 
-export default function QuickViewModal({ product, onClose }: Props) {
-  const [qty, setQty] = useState(1);
+export default function QuickViewModal({ product, onCloseAction }: Props) {
+  // quantity state reserved for future use (not used yet)
 
   const originalPrice =
     product.discount > 0
@@ -24,18 +25,18 @@ export default function QuickViewModal({ product, onClose }: Props) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseAction();
     };
     window.addEventListener("keydown", handleEsc);
     return () => {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleEsc);
     };
-  }, [onClose]);
+  }, [onCloseAction]);
 
   return createPortal(
-    <div
-      onClick={onClose}
+      <div
+      onClick={onCloseAction}
       className="fixed inset-0 z-999 flex items-center justify-center bg-black/50 backdrop-blur-lg p-6 animate-in fade-in duration-300"
     >
       <div
@@ -47,7 +48,7 @@ export default function QuickViewModal({ product, onClose }: Props) {
 
         {/* Close */}
         <button
-          onClick={onClose}
+          onClick={onCloseAction}
           className="absolute right-5 top-5 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 shadow-lg transition-all duration-300 hover:rotate-90 hover:bg-red-500 hover:text-white"
         >
           <X size={20} />
@@ -127,21 +128,22 @@ export default function QuickViewModal({ product, onClose }: Props) {
 
           {/* Actions */}
           <div className="mt-6 flex items-center gap-3">
-            <button
+            <AddToCartButton
+              product={product}
               disabled={product.stock === 0}
               className="flex-1 flex items-center cursor-pointer justify-center gap-2 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white px-6 py-3 rounded-xl font-semibold transition"
             >
               <ShoppingCart size={18} />
               Add to Cart
-            </button>
+            </AddToCartButton>
 
             <WishlistButton />
           </div>
 
           {/* Full page link */}
-          <Link
+            <Link
             href={`/product/${product.id}`}
-            onClick={onClose}
+            onClick={onCloseAction}
             className="mt-4 text-center  text-sm text-gray-400 hover:text-red-500 transition underline underline-offset-4"
           >
             View Full Details →

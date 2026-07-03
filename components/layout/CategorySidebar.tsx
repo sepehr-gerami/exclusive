@@ -4,7 +4,7 @@ import { CATEGORIES } from "../../constants/categories";
 
 export default function CategorySidebar() {
   return (
-    <aside className="w-54 border-r border-gray-200 py-8 flex flex-col">
+    <aside className="w-full max-w-[240px] border-r border-gray-200 py-8 flex flex-col">
       {/* Label */}
       <p className="px-6 mb-4 text-[10px] font-bold tracking-[0.18em] text-gray-400 uppercase select-none">
         Categories

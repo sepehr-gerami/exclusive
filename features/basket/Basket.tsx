@@ -25,45 +25,12 @@ export default function CartButton() {
       "
     >
       {/* Hover Background */}
-      <span
-        className="
-          absolute
-          inset-0
-          left-1/2
-          w-0
-          -translate-x-1/2
-          rounded-2xl
-          bg-gray-100
-          transition-all
-          duration-200
-          group-hover:w-full
-        "
-      />
-
-      {/* Bottom Bar */}
-      <span
-        className="
-          absolute
-          bottom-0
-          left-1/2
-          h-0.5
-          w-5
-          -translate-x-1/2
-          bg-black
-          transition-all
-          duration-300
-          group-hover:w-9
-        "
-      />
+      <span className="absolute inset-0 left-1/2 -translate-x-1/2 w-0 rounded-2xl bg-gray-100 transition-all duration-200 group-hover:w-full" />
+      <span className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 bg-black transition-all duration-300 group-hover:w-9" />
 
       {/* Cart Icon */}
       <span className="relative z-10 transition-all duration-200 group-hover:scale-110">
-        <ShoppingCart
-          size={20}
-          color="#1c5a4d"
-          strokeWidth={1.75}
-          absoluteStrokeWidth
-        />
+        <ShoppingCart color="#000" strokeWidth={1.5} />
       </span>
 
       {/* Badge */}

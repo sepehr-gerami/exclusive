@@ -9,6 +9,7 @@ import { Product } from "@/types/Product";
 import WishlistButton from "@/components/product/WishlistButton";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import { useState } from "react";
+import AddToCartButton from "@/components/product/AddToCartButton";
 
 export default function ProductCard({ product }: { product: Product }) {
   const originalPrice =
@@ -49,7 +50,7 @@ export default function ProductCard({ product }: { product: Product }) {
       {isOpen && (
         <QuickViewModal
           product={product}
-          onClose={() => setIsOpen(false)}  // ← اینجا false
+          onCloseAction={() => setIsOpen(false)}
         />
       )}
 
@@ -62,15 +63,15 @@ export default function ProductCard({ product }: { product: Product }) {
           className="object-contain p-4"
         />
         {/* slides up on hover */}
-        <button
-          onClick={(e) => e.preventDefault()}
+        <AddToCartButton
+          product={product}
           className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
                      text-sm font-medium text-center
                      translate-y-full group-hover:translate-y-0
                      transition-transform duration-300"
         >
           Add to Cart
-        </button>
+        </AddToCartButton>
       </div>
 
       {/* ── Info ── */}

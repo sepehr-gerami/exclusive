@@ -7,6 +7,7 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import WishlistButton from "@/components/product/WishlistButton";
+import AddToCartButton from "@/components/product/AddToCartButton";
 
 
 type Props = {
@@ -42,9 +43,9 @@ export default function ProductCard({ product }: Props) {
 
         {isOpen && (
           <QuickViewModal
-            product={product}
-            onClose={() => setIsOpen(false)} 
-          />
+              product={product}
+              onCloseAction={() => setIsOpen(false)} 
+            />
         )}
         <div className="relative h-44 overflow-hidden">
           <Image
@@ -54,14 +55,15 @@ export default function ProductCard({ product }: Props) {
             className="object-contain p-4"
           />
           {/* slides up on hover */}
-          <button
+          <AddToCartButton
+            product={product}
             className="absolute bottom-0 left-0 cursor-pointer right-0 py-2.5 bg-black text-white
                                text-sm font-medium text-center
                                translate-y-full group-hover:translate-y-0
                                transition-transform duration-300"
           >
             Add to Cart
-          </button>
+          </AddToCartButton>
         </div>
 
         <h3 className="mt-4 text-sm font-medium p-1 line-clamp-1">

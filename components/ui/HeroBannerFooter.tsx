@@ -11,14 +11,13 @@ const stats = [
 
 export default function HeroBanner() {
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-[#111111] min-h-85 flex items-center px-30 py-35">
+    <div className="relative overflow-hidden rounded-2xl bg-[#111111] min-h-88 flex flex-col lg:flex-row items-center gap-8 px-6 py-10 lg:px-14 lg:py-14">
 
       {/* subtle radial glow behind product */}
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2
-                      bg-[radial-gradient(ellipse_at_center,rgba(80,80,80,0.35)_0%,transparent_70%)]" />
+      <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_center,rgba(80,80,80,0.35)_0%,transparent_70%)]" />
 
-      {/* ── Left content ── */}
-      <div className="relative z-10 flex-1 max-w-sm">
+      {/* Left content */}
+      <div className="relative z-10 w-full lg:w-auto">
 
         <span className="text-green-400 text-xs font-semibold tracking-widest uppercase mb-3 block">
           Categories
@@ -29,7 +28,7 @@ export default function HeroBanner() {
         </h1>
 
         {/* circular stat badges */}
-        <div className="flex gap-3 mb-8">
+        <div className="flex flex-wrap gap-3 mb-8">
           {stats.map((s) => (
             <div
               key={s.label}
@@ -57,7 +56,7 @@ export default function HeroBanner() {
       </div>
 
 
-      <div className="absolute right-0 top-0 h-full w-[55%] pointer-events-none">
+      <div className="hidden lg:block absolute right-0 top-0 h-full w-[55%] pointer-events-none">
         <Image
           src={HeroBannerFooter}
           alt="Featured product"

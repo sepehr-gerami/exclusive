@@ -4,23 +4,23 @@ import FlashSalesServer from "@/features/flash-sales/FlashServer";
 import Categories from "@/features/flash-sales/Categories";
 import { Suspense } from "react";
 import FlashSaleSkeleton from "@/features/flash-sales/FlashSaleSkeleton";
-import HeroBannerSkeleton from "@/components/ui/HeroBannerSkeleton";
 import BestSellingSection from "@/features/best-selling/BestSellingSection";
 import ExploreProductsSection from "@/components/ui/ExploreProductsSection";
 import HeroBannerFooter from "@/components/ui/HeroBannerFooter";
+import HeroBannerSkeleton from "@/components/ui/HeroBannerSkeleton";
 import NewArrivals from "@/features/new-arrivals/NewArrivals";
 import ServiceStrip from "@/features/services/ServiceStrip";
 
 
 export default function Home() {
   return (
-    <main>
-      <section className="flex gap-6 mt-5 items-stretch">
-        <div className="w-1/5">
+    <main className="container mx-auto px-4">
+      <section className="flex flex-col gap-6 mt-5 items-stretch lg:flex-row">
+        <div className="w-full lg:w-1/5">
           <CategorySidebar />
         </div>
 
-        <div className="w-3/4">
+        <div className="w-full lg:w-4/5">
           <Suspense fallback={<HeroBannerSkeleton />}>
             <HeroBanner />
           </Suspense>
@@ -32,7 +32,7 @@ export default function Home() {
       </Suspense>
         <Categories />
       <BestSellingSection />
-      <div className="container mx-auto px-4 py-8 space-y-16">
+      <div className="space-y-16 py-8">
         <HeroBannerFooter />
         <ExploreProductsSection />
         <NewArrivals />

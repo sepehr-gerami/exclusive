@@ -4,9 +4,9 @@ import ProductSlider from "./ProductSlider";
 
 export default function BestSellingSection() {
   return (
-    <section className="mx-10 mt-20">
+    <section className="container mx-auto px-4 mt-20">
       {/* HEADER */}
-      <div className="flex items-end justify-between mb-10">
+      <div className="flex flex-col gap-4 mb-10 md:flex-row md:items-end md:justify-between">
         <div>
           <div className="flex items-center gap-2 mb-4">
             <div className="w-4 h-8 bg-red-500 rounded-sm" />

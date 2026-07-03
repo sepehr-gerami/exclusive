@@ -1,4 +1,4 @@
-import ContactPage from "@/components/layout/ContactPage"
+import ContactPage from "@/components/contact/ContactPage"
 
 export default function Page() {
   return <ContactPage />

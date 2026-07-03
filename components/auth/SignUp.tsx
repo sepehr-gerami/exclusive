@@ -8,6 +8,7 @@ import { useRef, useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^\d{10,15}$/;
@@ -62,6 +63,8 @@ export default function SignUpPage() {
   const passRef = useRef<HTMLInputElement>(null);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+  const signup = useAuthStore((state) => state.signup);
+  const authError = useAuthStore((state) => state.error);
   const handleEnter = (
     e: React.KeyboardEvent<HTMLInputElement>,
     nextRef: React.RefObject<HTMLInputElement | null> | null,
@@ -95,7 +98,6 @@ export default function SignUpPage() {
   };
 
   const handleSubmitForm = async () => {
-
     const keys: FieldKey[] = ["name", "email", "password"];
 
     const newStates = keys.reduce((acc, k) => {
@@ -118,10 +120,18 @@ export default function SignUpPage() {
     }
 
     setIsLoading(true);
-
-    await new Promise((r) => setTimeout(r, 1000));
-
+    const success = await signup(values.name, values.email, values.password);
     setIsLoading(false);
+
+    if (!success) {
+      addToast({
+        id: "error-" + Date.now(),
+        type: "error",
+        title: "Sign up failed",
+        sub: authError || "Please check your details and try again.",
+      });
+      return;
+    }
 
     addToast({
       id: "success-" + Date.now(),
@@ -144,7 +154,7 @@ export default function SignUpPage() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="grid grid-cols-2 gap-3 ">
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
 
         {/* TOASTS */}
         <div className="fixed top-4 right-4 space-y-2 z-50">
@@ -227,12 +237,7 @@ focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
               value={values.email}
               ref={emailRef}
               onKeyDown={(e) => handleEnter(e, passRef)}
-              onChange={(e) =>
-                setValues((prev) => ({
-                  ...prev,
-                  email: e.target.value,
-                }))
-              }
+              onChange={(e) => handleChange("email", e.target.value)}
               className="
 border-0
 outline-none
@@ -256,6 +261,9 @@ focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
               <p className="text-red-500 text-sm">
                 {rules.email.error}
               </p>
+            )}
+            {authError && (
+              <p className="text-red-500 text-sm">{authError}</p>
             )}
 
             {/* PASSWORD */}

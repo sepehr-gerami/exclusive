@@ -1,7 +1,7 @@
 export default function HeroBannerSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl bg-black h-95 animate-pulse">
-      <div className="flex items-center justify-between h-full pl-16 px-5">
+    <div className="overflow-hidden rounded-2xl bg-black min-h-[24rem] animate-pulse">
+      <div className="flex flex-col justify-between h-full gap-8 p-5 md:flex-row md:items-center">
         
         {/* Left */}
         <div>
@@ -19,7 +19,7 @@ export default function HeroBannerSkeleton() {
         </div>
 
         {/* Right */}
-        <div className="w-85 h-85 rounded-xl bg-gray-800" />
+        <div className="w-full md:w-[20rem] h-80 rounded-xl bg-gray-800" />
       </div>
 
       {/* Pagination */}

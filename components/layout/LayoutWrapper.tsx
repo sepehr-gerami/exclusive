@@ -6,16 +6,15 @@ import Footer from "./Footer";
 import TopHeader from "./TopHeader";
 import ScrollToTop from "../ui/ScrollToTop";
 
+const AUTH_ROUTES_HIDE_LAYOUT = ["/login", "/sign-up", "/reset-password"];
+
 export default function LayoutWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-console.log(pathname);
-  const hideLayout =
-    pathname === "/login" ||
-     pathname === "/sign-up";
+  const hideLayout = AUTH_ROUTES_HIDE_LAYOUT.includes(pathname);
 
   return (
     <>

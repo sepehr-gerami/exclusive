@@ -1,4 +1,5 @@
 import { Heart, ShoppingCart } from "lucide-react";
+import AddToCartButton from "@/components/product/AddToCartButton";
 import { getProduct } from "@/lib/api/Product";
 import Image from "next/image"
 import Link from "next/link";
@@ -12,7 +13,7 @@ export default async function ProductDetail({ id }: { id: string }) {
         <h2 className="text-2xl font-semibold text-gray-700">
           Product not found
         </h2>
-        <Link href="/Account" className="text-sm text-red-500 hover:underline">
+        <Link href="/account" className="text-sm text-red-500 hover:underline">
           Back to products
         </Link>
       </div>
@@ -92,14 +93,14 @@ export default async function ProductDetail({ id }: { id: string }) {
 
         {/* Actions */}
         <div className="flex items-center gap-3 mt-2">
-          <button
-          
+          <AddToCartButton
+            product={product}
             disabled={product.stock === 0}
             className="flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-medium transition"
           >
             <ShoppingCart size={18} />
             Add to Cart
-          </button>
+          </AddToCartButton>
 
           <button className="w-12 h-12 border border-gray-200 rounded-lg flex items-center justify-center hover:border-red-400 hover:text-red-500 transition">
             <Heart size={18} />

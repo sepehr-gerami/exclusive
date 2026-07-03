@@ -51,7 +51,7 @@ export default function CartPage() {
             {items.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between rounded-xl border p-5 shadow-sm"
+                className="flex flex-col gap-5 rounded-xl border p-5 shadow-sm lg:flex-row lg:items-center lg:justify-between"
               >
                 <div className="flex items-center gap-5">
 
@@ -81,7 +81,7 @@ export default function CartPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-8">
+                <div className="flex flex-col gap-4 items-start lg:flex-row lg:items-center lg:gap-8">
 
                   <h3 className="font-bold text-lg">
                     $
@@ -102,7 +102,7 @@ export default function CartPage() {
 
           {/* Summary */}
 
-          <div className="mt-10 ml-auto w-full max-w-md rounded-xl border p-6 shadow-sm">
+          <div className="mt-10 w-full max-w-md rounded-xl border p-6 shadow-sm">
 
             <h2 className="text-xl font-semibold mb-6">
               Order Summary

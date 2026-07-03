@@ -4,9 +4,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 export default function FlashSaleSkeleton() {
   return (
-    <section className="mt-20 mx-10">
-      <div className="flex items-end justify-between mb-10">
-        <div className="flex gap-18">
+    <section className="container mx-auto px-4 mt-20">
+      <div className="flex flex-col gap-6 mb-10 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-wrap items-center gap-6">
           <div>
             <div className="flex items-center gap-2 mb-4">
               <Skeleton width={16} height={32} />

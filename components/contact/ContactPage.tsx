@@ -275,7 +275,7 @@ export default function ContactPage() {
     }
 
     return (
-        <section className="flex flex-col px-20 py-10">
+        <section className="flex flex-col px-6 py-10 sm:px-8">
 
             {/* Toasts */}
             <div style={{ position: "fixed", top: "20px", right: "20px", zIndex: 9999, display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -288,7 +288,7 @@ export default function ContactPage() {
                 <span className="text-black font-medium">Contact</span>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
                 {/* ستون چپ */}
                 <div className="border border-gray-200 rounded-md shadow-sm p-8 flex flex-col gap-8">

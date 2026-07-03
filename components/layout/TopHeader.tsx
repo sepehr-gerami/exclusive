@@ -14,10 +14,10 @@ export default function TopHeader() {
 
   return (
     <section className="bg-black text-white">
-      <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4">
-        <div className="w-20" />
+      <div className="mx-auto flex flex-col gap-2 sm:flex-row sm:items-center h-auto sm:h-10 max-w-7xl justify-between px-4 py-2">
+        <div className="w-full sm:w-20" />
 
-        <span className="text-white/90 text-sm">
+        <span className="text-white/90 text-sm text-center sm:text-left">
           {t.summerSale}
           <Link href="/" className="ml-2 underline font-semibold">
             {t.shopNow}
