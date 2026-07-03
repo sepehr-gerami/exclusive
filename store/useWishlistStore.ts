@@ -2,40 +2,67 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Product } from "@/types/Product";
 
-type WishlistStore = {
-	items: Product[];
-	addToWishlist: (product: Product) => void;
-	removeFromWishlist: (id: number) => void;
-	toggleWishlist: (product: Product) => void;
-	clearWishlist: () => void;
-	isInWishlist: (id: number) => boolean;
-};
+interface WishlistStore {
+  items: Product[];
+  hydrated: boolean;
+
+  setHydrated: (value: boolean) => void;
+
+  addToWishlist: (product: Product) => void;
+  removeFromWishlist: (id: number) => void;
+  toggleWishlist: (product: Product) => void;
+  clearWishlist: () => void;
+}
 
 export const useWishlistStore = create<WishlistStore>()(
-	persist(
-		(set, get) => ({
-			items: [],
+  persist(
+    (set) => ({
+      items: [],
+      hydrated: false,
 
-			addToWishlist: (product) =>
-				set((state) => ({ items: [...state.items.filter((i) => i.id !== product.id), product] })),
+      setHydrated: (value) => set({ hydrated: value }),
 
-			removeFromWishlist: (id) =>
-				set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
+      addToWishlist: (product) =>
+        set((state) => {
+          if (state.items.some((item) => item.id === product.id)) {
+            return state;
+          }
 
-			toggleWishlist: (product) => {
-				const exists = get().items.some((i) => i.id === product.id);
-				if (exists) get().removeFromWishlist(product.id);
-				else get().addToWishlist(product);
-			},
+          return {
+            items: [...state.items, product],
+          };
+        }),
 
-			clearWishlist: () => set({ items: [] }),
+      removeFromWishlist: (id) =>
+        set((state) => ({
+          items: state.items.filter((item) => item.id !== id),
+        })),
 
-			isInWishlist: (id) => get().items.some((i) => i.id === id),
-		}),
-		{
-			name: "exclusive-wishlist",
-		}
-	)
+      toggleWishlist: (product) =>
+        set((state) => {
+          const exists = state.items.some(
+            (item) => item.id === product.id
+          );
+
+          return {
+            items: exists
+              ? state.items.filter((item) => item.id !== product.id)
+              : [...state.items, product],
+          };
+        }),
+
+      clearWishlist: () => ({
+        items: [],
+      }),
+    }),
+    {
+      name: "exclusive-wishlist",
+
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
+    }
+  )
 );
 
 export default useWishlistStore;
