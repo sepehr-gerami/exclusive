@@ -1,36 +1,36 @@
 "use client";
 
-import { ShoppingCart } from "lucide-react";
+import { ReactNode } from "react";
 import { Product } from "@/types/Product";
-import { useCart } from "@/store/useCart";
-import React from "react";
+import { useAddToCart } from "@/store/useCart";
 
-type Props = {
+interface AddToCartButtonProps {
   product: Product;
-  qty?: number;
-  className?: string;
-  children?: React.ReactNode;
   disabled?: boolean;
-};
+  className?: string;
+  children?: ReactNode;
+}
 
-export default function AddToCartButton({ product, qty = 1, className, children, disabled }: Props) {
-  const addToCart = useCart((s) => s.addToCart);
+export default function AddToCartButton({
+  product,
+  disabled = false,
+  className = "",
+  children = "Add to Cart",
+}: AddToCartButtonProps) {
+  const addToCart = useAddToCart();
+
+  const handleClick = () => {
+    addToCart(product);
+  };
 
   return (
     <button
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        if (!disabled) addToCart(product);
-      }}
+      type="button"
+      onClick={handleClick}
       disabled={disabled}
       className={className}
     >
-      {children ?? (
-        <>
-          <ShoppingCart size={18} /> Add to Cart
-        </>
-      )}
+      {children}
     </button>
   );
 }

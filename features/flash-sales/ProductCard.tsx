@@ -27,7 +27,7 @@ export default function ProductCard({ product }: Props) {
           -40%
         </span>
         <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
-          <WishlistButton />
+          <WishlistButton product={product} />
           <button
             onClick={(e) => {
               e.preventDefault();

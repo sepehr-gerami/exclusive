@@ -1,79 +1,85 @@
+// components/layout/CategorySidebar.tsx
+"use client";
+
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
-import { CATEGORIES } from "../../constants/categories";
+import { ChevronRight, Menu, X } from "lucide-react";
+import { CATEGORIES } from "@/constants/categories";
+import { useState } from "react";
 
 export default function CategorySidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <aside className="w-full max-w-[240px] border-r border-gray-200 py-8 flex flex-col">
-      {/* Label */}
-      <p className="px-6 mb-4 text-[10px] font-bold tracking-[0.18em] text-gray-400 uppercase select-none">
-        Categories
-      </p>
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="lg:hidden fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:bg-red-600 transition"
+      >
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
 
-      {/* List */}
-      <ul className="flex flex-col">
-        {CATEGORIES.map((category) => (
-          <li key={category.apiCategory} className="group relative">
-            {/* Hover Background */}
-            <span
-              className="
-                absolute inset-y-0 left-0 w-0
-                bg-gray-100
-                transition-all duration-200
-                group-hover:w-full
-              "
-            />
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
 
-            {/* Active Bar */}
-            <span
-              className="
-                absolute left-0 top-1/2 -translate-y-1/2
-                w-0.5 h-0 bg-red-500 rounded-full
-                transition-all duration-200
-                group-hover:h-5
-              "
-            />
+      {/* Sidebar: Slide out on mobile, always visible on desktop */}
+      <aside
+        className={`
+          fixed lg:relative
+          left-0 top-0 h-screen lg:h-auto
+          w-64 lg:w-full lg:max-w-60
+          bg-white lg:bg-transparent
+          border-r border-gray-200
+          py-8 px-0 lg:px-0
+          flex flex-col
+          transform transition-transform duration-300 lg:transform-none
+          z-35
+          ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+        `}
+      >
+        {/* Label */}
+        <p className="px-6 mb-4 text-[10px] font-bold tracking-[0.18em] text-gray-400 uppercase select-none">
+          Categories
+        </p>
 
-            <Link
-              href={`/product?category=${category.apiCategory}`}
-              className="
-                relative flex items-center justify-between
-                px-6 py-3
-                text-sm font-medium text-gray-600
-                transition-all duration-200
-                group-hover:text-black
-                group-hover:pl-8
-              "
-            >
-              <span>{category.title}</span>
+        {/* List */}
+        <ul className="flex flex-col overflow-y-auto lg:overflow-visible">
+          {CATEGORIES.map((category) => (
+            <li key={category.apiCategory} className="group relative">
+              <span className="absolute inset-y-0 left-0 w-0 bg-gray-100 transition-all duration-200 group-hover:w-full" />
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-red-500 rounded-full transition-all duration-200 group-hover:h-5" />
 
-              <ChevronRight
-                size={14}
-                className="
-                  shrink-0 text-gray-400
-                  transition-all duration-200
-                  group-hover:text-red-500
-                  group-hover:translate-x-1
-                "
-              />
-            </Link>
-          </li>
-        ))}
-      </ul>
+              <Link
+                href={`/product?category=${category.apiCategory}`}
+                onClick={() => setIsOpen(false)}
+                className="relative flex items-center justify-between px-6 py-3 text-sm font-medium text-gray-600 transition-all duration-200 group-hover:text-black group-hover:pl-8"
+              >
+                <span>{category.title}</span>
+                <ChevronRight
+                  size={14}
+                  className="shrink-0 text-gray-400 transition-all duration-200 group-hover:text-red-500 group-hover:translate-x-1"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
 
-      {/* Footer */}
-      <div className="mt-auto mx-6 pt-6 border-t border-gray-200">
-        <Link     
-          href="/product"
-          className="
-            text-xs font-medium text-gray-400
-            hover:text-gray-700
-            transition-colors
-          "
-        >
-          View all categories →
-        </Link>
-      </div>
-    </aside>
+        {/* Footer */}
+        <div className="mt-auto mx-6 pt-6 border-t border-gray-200">
+          <Link
+            href="/product"
+            onClick={() => setIsOpen(false)}
+            className="text-xs font-medium text-gray-400 hover:text-gray-700 transition-colors"
+          >
+            View all categories →
+          </Link>
+        </div>
+      </aside>
+    </>
   );
 }

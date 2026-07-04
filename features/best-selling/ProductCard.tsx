@@ -33,7 +33,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* ── Action icons (heart + eye) ── */}
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
-        <WishlistButton />
+        <WishlistButton product={product} />
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -55,24 +55,26 @@ export default function ProductCard({ product }: { product: Product }) {
       )}
 
       {/* ── Image + Add to Cart hover ── */}
-      <div className="relative h-44 overflow-hidden">
-        <Image
-          src={product.thumbnail}
-          alt={product.title}
-          fill
-          className="object-contain p-4"
-        />
-        {/* slides up on hover */}
-        <AddToCartButton
-          product={product}
-          className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
-                     text-sm font-medium text-center
-                     translate-y-full group-hover:translate-y-0
-                     transition-transform duration-300"
-        >
-          Add to Cart
-        </AddToCartButton>
-      </div>
+
+<div className="relative w-[80%] aspect-square bg-[#F5F5F5] overflow-hidden flex items-center justify-center mx-auto">
+  <Image
+    src={product.thumbnail}
+    alt={product.title}
+    width={200}
+    height={200}
+    className="w-[80%] h-[80%] object-contain"
+  />
+
+  <AddToCartButton
+    product={product}
+    className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
+               text-sm font-medium text-center
+               translate-y-full group-hover:translate-y-0
+               transition-transform duration-300"
+  >
+    Add to Cart
+  </AddToCartButton>
+</div>
 
       {/* ── Info ── */}
       <div className="p-3 flex flex-col gap-1">

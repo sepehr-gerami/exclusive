@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
-import { useCart } from "@/store/useCart";
+import { useCartStore } from "@/store/useCart";
 
 export default function CartPage() {
-  const items = useCart((state) => state.items);
-  const removeFromCart = useCart((state) => state.removeFromCart);
+  const items = useCartStore((state) => state.items);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
 
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,

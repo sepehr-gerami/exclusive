@@ -1,28 +1,78 @@
 "use client";
-import Link from 'next/link'
-import Navbar from '@/components/nav/Navbar'
-import Wishlist from '@/features/wishlist/Wishlist';
-import Basket from '@/features/basket/Basket';
-import SearchInput from '../ui/search-box/SearchInput';
 
+import Link from "next/link";
+import { useState } from "react";
+import { Menu, Search, X } from "lucide-react";
+
+import Navbar from "@/components/nav/Navbar";
+import Wishlist from "@/features/wishlist/Wishlist";
+import Basket from "@/features/basket/Basket";
+import SearchInput from "../ui/search-box/SearchInput";
+import MobileMenu from "./MobileMenu";
 
 export default function Header() {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
-    <header className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mt-10 border-b border-gray-200 p-5">
-      <Link href="/" className="font-bold text-3xl">
-        Exclusive
-      </Link>
+    <>
+      <header className="mt-4 border-b border-gray-200 px-3 py-3 sm:mt-10 sm:px-5 sm:py-5">
+        <div className="flex items-center justify-between gap-4">
 
-      <Navbar />
+          {/* Logo */}
+          <Link
+            href="/"
+            className="shrink-0 text-2xl font-bold lg:text-3xl"
+          >
+            Exclusive
+          </Link>
 
-      <div className="flex flex-col gap-4 items-stretch justify-between lg:flex-row lg:items-center">
-        <SearchInput />
+          {/* Desktop Navigation */}
+          <div className="hidden lg:block">
+            <Navbar />
+          </div>
 
-        <div className="flex items-center gap-4 lg:mr-8">
-          <Wishlist />
-          <Basket />
+          {/* Desktop Right */}
+          <div className="hidden items-center gap-5 lg:flex">
+            <SearchInput />
+            <Wishlist />
+            <Basket />
+          </div>
+
+          {/* Mobile Right */}
+          <div className="flex items-center gap-1 lg:hidden">
+            <Basket />
+
+            <button
+              type="button"
+              onClick={() => setSearchOpen((prev) => !prev)}
+              className="rounded-lg p-2 transition hover:bg-gray-100"
+            >
+              {searchOpen ? <X size={20} /> : <Search size={20} />}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className="rounded-lg p-2 transition hover:bg-gray-100"
+            >
+              <Menu size={22} />
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
-  )
+
+        {/* Mobile Search */}
+        {searchOpen && (
+          <div className="mt-4 lg:hidden">
+            <SearchInput />
+          </div>
+        )}
+      </header>
+
+      <MobileMenu
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+      />
+    </>
+  );
 }

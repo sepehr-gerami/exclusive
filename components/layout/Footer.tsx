@@ -1,40 +1,54 @@
-"use client"
+"use client";
+
 import Link from "next/link";
-import { SendHorizontal } from 'lucide-react';
-import { FaTwitter, FaInstagram, FaLinkedinIn, FaFacebook, FaGooglePlay, FaApple } from "react-icons/fa";
 import Image from "next/image";
 import { useState } from "react";
+import { SendHorizontal } from "lucide-react";
+import {
+  FaTwitter,
+  FaInstagram,
+  FaLinkedinIn,
+  FaFacebook,
+  FaGooglePlay,
+  FaApple,
+} from "react-icons/fa";
+
 import Alert from "../ui/Alert";
 
 type FieldKey = "email";
-interface AlertProps {
-  show: boolean
-  onClose: () => void
-  duration?: number
-}
+
 const rules: Record<
   FieldKey,
   {
     validate: (v: string) => boolean;
     empty: string;
     error: string;
-    ok: string;
   }
 > = {
   email: {
-    validate: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
+    validate: (v) =>
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()),
     empty: "Email is required",
     error: "Please enter a valid email (e.g. name@example.com)",
-    ok: "Valid email ✓",
   },
 };
+
 const sections = [
   {
     title: "Support",
     links: [
-      { label: "111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.", href: "#" },
-      { label: "exclusive@gmail.com", href: "mailto:exclusive@gmail.com" },
-      { label: "+88015-88888-9999", href: "tel:+8801588888999" },
+      {
+        label: "111 Bijoy sarani, Dhaka, DH 1515, Bangladesh.",
+        href: "#",
+      },
+      {
+        label: "exclusive@gmail.com",
+        href: "mailto:exclusive@gmail.com",
+      },
+      {
+        label: "+88015-88888-9999",
+        href: "tel:+8801588888999",
+      },
     ],
   },
   {
@@ -67,26 +81,34 @@ const socials = [
 
 export default function Footer() {
   const [email, setEmail] = useState("");
+
   const [showAlert, setShowAlert] = useState(false);
-  const [alertType, setAlertType] = useState<"success" | "warn">("success");
+
+const [alertType, setAlertType] = useState<
+  "success" | "error" | "warning" | "info"
+>("success");
+
   const [alertTitle, setAlertTitle] = useState("");
+
   const [alertSub, setAlertSub] = useState("");
 
-  const handleSubscribe = () => {
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+
     const value = email.trim();
 
     if (!value) {
-      setAlertType("warn");
+      setAlertType("warning");
       setAlertTitle("Email is empty");
-      setAlertSub("Email is required");
+      setAlertSub(rules.email.empty);
       setShowAlert(true);
       return;
     }
 
     if (!rules.email.validate(value)) {
-      setAlertType("warn");
+      setAlertType("warning");
       setAlertTitle("Invalid email");
-      setAlertSub("Please enter a valid email (e.g. name@example.com)");
+      setAlertSub(rules.email.error);
       setShowAlert(true);
       return;
     }
@@ -98,131 +120,159 @@ export default function Footer() {
 
     setEmail("");
   };
+
   return (
-    <footer className="bg-[#1a1a1a] text-gray-300 mt-20">
-      <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+    <>
+      <footer className="mt-16 bg-[#1a1a1a] text-gray-300 sm:mt-20">
+        <div className="container mx-auto px-4 py-8 sm:px-6 sm:py-16">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-10">
 
-          {/* ── Exclusive + Subscribe ── */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-white text-xl font-bold">Exclusive</h2>
-            <div>
-              <p className="text-white font-semibold mb-1">Subscribe</p>
-              <p className="text-sm text-gray-400">Get 10% off your first order</p>
-            </div>
+            {/* Exclusive */}
+            <div className="flex flex-col gap-4">
+              <h2 className="text-xl font-bold text-white">
+                Exclusive
+              </h2>
 
-            {/* Email input */}
-            <div className="flex items-center border border-gray-500 rounded-md overflow-hidden mt-1">
-              <div className="flex items-center border border-gray-500 rounded-md overflow-hidden focus-within:border-blue-400 transition-colors">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                  placeholder="Enter your email"
-                  className="bg-transparent text-sm text-gray-300 placeholder-gray-500 px-3 py-2 flex-1 outline-none"
-                />
+              <div>
+                <p className="mb-1 font-semibold text-white">
+                  Subscribe
+                </p>
+
+                <p className="text-sm text-gray-400">
+                  Get 10% off your first order
+                </p>
               </div>
 
+              <form
+                onSubmit={handleSubscribe}
+                className="w-full max-w-sm"
+              >
+                <div className="flex items-center overflow-hidden rounded-md border border-gray-500 transition-colors focus-within:border-blue-400">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(e.target.value)
+                    }
+                    placeholder="Enter your email"
+                    className="flex-1 bg-transparent px-3 py-2 text-sm text-gray-300 placeholder-gray-500 outline-none"
+                  />
 
-              <button
-                type="button"
-                onClick={handleSubscribe}
-                className="px-1 py- text-white cursor-pointer hover:text-red-400 transition">
-                <SendHorizontal size={18} />
-              </button>
+                  <button
+                    type="submit"
+                    className="cursor-pointer px-3 py-2 text-white transition hover:text-red-400"
+                  >
+                    <SendHorizontal size={18} />
+                  </button>
+                </div>
+              </form>
             </div>
-          </div>
 
-          {/* ── Dynamic sections ── */}
-          {sections.map((section) => (
-            <div key={section.title} className="flex flex-col gap-3">
-              <h3 className="text-white font-semibold">{section.title}</h3>
-              <ul className="flex flex-col gap-2">
-                {section.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition leading-relaxed"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+            {/* Dynamic Sections */}
+            {sections.map((section) => (
+              <div
+                key={section.title}
+                className="flex flex-col gap-3"
+              >
+                <h3 className="font-semibold text-white">
+                  {section.title}
+                </h3>
+
+                <ul className="flex flex-col gap-2">
+                  {section.links.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="text-sm text-gray-400 transition hover:text-white"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            {/* Download */}
+            <div className="flex flex-col gap-4">
+              <h3 className="font-semibold text-white">
+                Download App
+              </h3>
+
+              <p className="text-sm text-gray-500">
+                Save $3 with App New User Only
+              </p>
+
+              <div className="flex items-center gap-3">
+                <div className="flex h-16 w-16 items-center justify-center rounded bg-white">
+                  <Image
+                    src="/qrCode/Qrcode1.png"
+                    alt="QR Code"
+                    width={64}
+                    height={64}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <Link
+                    href="#"
+                    className="flex items-center gap-2 rounded border border-gray-500 px-2 py-1 transition hover:border-white"
+                  >
+                    <FaGooglePlay size={14} />
+
+                    <span className="text-[10px] leading-tight text-gray-300">
+                      GET IT ON
+                      <br />
+                      <span className="text-xs font-semibold text-white">
+                        Google Play
+                      </span>
+                    </span>
+                  </Link>
+
+                  <Link
+                    href="#"
+                    className="flex items-center gap-2 rounded border border-gray-500 px-2 py-1 transition hover:border-white"
+                  >
+                    <FaApple size={14} />
+
+                    <span className="text-[10px] leading-tight text-gray-300">
+                      Download on
+                      <br />
+                      <span className="text-xs font-semibold text-white">
+                        App Store
+                      </span>
+                    </span>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="mt-2 flex items-center gap-4">
+                {socials.map((social, index) => (
+                  <Link
+                    key={index}
+                    href={social.href}
+                    className="text-gray-400 transition hover:text-white"
+                  >
+                    {social.icon}
+                  </Link>
                 ))}
-              </ul>
-            </div>
-          ))}
-
-          {/* ── Download App ── */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-white font-semibold">Download App</h3>
-            <p className="text-xs text-gray-500">Save $3 with App New User Only</p>
-
-            {/* QR + store buttons */}
-            <div className="flex items-center gap-3">
-              {/* QR placeholder */}
-              <div className="w-16 h-16 bg-white rounded flex items-center justify-center shrink-0">
-                <Image
-                  src="/qrCode/Qrcode1.png"
-                  alt="QR Code"
-                  width={64}
-                  height={64}
-                />
               </div>
-
-              <div className="flex flex-col gap-2">
-                <Link
-                  href="#"
-                  className="flex items-center gap-1.5 border border-gray-500 rounded px-2 py-1 hover:border-white transition"
-                >
-                  <FaGooglePlay />
-                  <span className="text-[10px] leading-tight text-gray-300">
-                    GET IT ON<br />
-                    <span className="font-semibold text-white text-xs">Google Play</span>
-                  </span>
-                </Link>
-                <Link
-                  href="#"
-                  className="flex items-center gap-1.5 border border-gray-500 rounded px-2 py-1 hover:border-white transition"
-                >
-                  <FaApple />
-                  <span className="text-[10px] leading-tight text-gray-300">
-                    Download on the<br />
-                    <span className="font-semibold text-white text-xs">App Store</span>
-                  </span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Socials */}
-            <div className="flex items-center gap-4 mt-2">
-              {socials.map((s, i) => (
-                <Link
-                  key={i}
-                  href={s.href}
-                  className="text-gray-400 hover:text-white transition"
-                >
-                  {s.icon}
-                </Link>
-              ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* ── Bottom bar ── */}
-      <div className="border-t border-gray-700 py-5 text-center text-xs text-gray-500">
-        © Copyright Rimel 2022. All right reserved
-      </div>
+        <div className="border-t border-gray-700 py-4 text-center text-xs text-gray-500">
+          © Copyright Rimel 2022. All rights reserved.
+        </div>
+      </footer>
+
       <Alert
         show={showAlert}
         onClose={() => setShowAlert(false)}
+        type={alertType}
         title={alertTitle}
         sub={alertSub}
       />
-    </footer>
+    </>
   );
 }
-
-

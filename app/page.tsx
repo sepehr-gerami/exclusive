@@ -16,7 +16,8 @@ export default function Home() {
   return (
     <main className="container mx-auto px-4">
       <section className="flex flex-col gap-6 mt-5 items-stretch lg:flex-row">
-        <div className="w-full lg:w-1/5">
+        {/* Hide on mobile, show on desktop */}
+        <div className="hidden lg:block lg:w-1/5">
           <CategorySidebar />
         </div>
 
@@ -27,10 +28,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Mobile-only category sidebar */}
+      <div className="lg:hidden mb-6">
+        <CategorySidebar />
+      </div>
+
       <Suspense fallback={<FlashSaleSkeleton />}>
         <FlashSalesServer />
       </Suspense>
-        <Categories />
+      <Categories />
       <BestSellingSection />
       <div className="space-y-16 py-8">
         <HeroBannerFooter />
