@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Eye } from "lucide-react";
 import { Product } from "@/types/Product";
 import WishlistButton from "@/components/product/WishlistButton";
-import QuickViewModal from "@/components/ui/QuickViewModal";
+import QuickViewModal from "@/components/ui/Modal/QuickViewModal";
 import { useState } from "react";
 import AddToCartButton from "@/components/product/AddToCartButton";
 import { Trash2 } from "lucide-react";
@@ -22,7 +22,7 @@ interface ProductCardProps {
 export default function ProductCard({
   product,
   showWishlistButton = true,
-  showRemoveButton = true,
+  showRemoveButton = false,
   showEyeButton = true }: ProductCardProps) {
 
   const originalPrice =
@@ -55,7 +55,7 @@ export default function ProductCard({
               removeFromWishlist(product.id);
             }}
             className="w-8 h-8 bg-white cursor-pointer rounded-full flex items-center justify-center
-                 shadow hover:bg-red-500 hover:text-white transition"
+                 shadow hover:bg-red-500 hover:text-white  transition-transform active:scale-95"
           >
             <Trash2 size={14} />
           </button>
@@ -100,7 +100,7 @@ export default function ProductCard({
         <AddToCartButton
           product={product}
           className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
-               text-sm font-medium text-center
+               text-sm font-medium text-center cursor-pointer active:scale-95
                translate-y-full group-hover:translate-y-0
                transition-transform duration-300"
         >

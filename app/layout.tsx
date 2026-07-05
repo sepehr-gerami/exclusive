@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import LayoutWrapper from "@/components/layout/LayoutWrapper";
+import AlertProvider from "@/components/ui/alert/AlertProvider";
 
 export const metadata: Metadata = {
   title: "Exclusive",
@@ -15,9 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en" dir="ltr">
       <body>
+           <AlertProvider>
         <LayoutWrapper>
           {children}
         </LayoutWrapper>
+           </AlertProvider>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ import { useRef } from "react";
 import "swiper/css";
 import type { Swiper as SwiperType } from "swiper";
 
-import ProductCard from "@/features/flash-sales/ProductCard";
+import ProductCard from "@/features/best-selling/ProductCard";
 import Countdown from "./Countdown";
 import Link from "next/link";
 import { Product } from "@/types/Product";
@@ -66,7 +66,7 @@ export default function FlashSales({ products }: Props) {
             >
                 {products.map((p) => (
                     <SwiperSlide key={p.id}>
-                        <ProductCard product={p} />
+                        <ProductCard showRemoveButton = {false} product={p} />
                     </SwiperSlide>
                 ))}
             </Swiper>

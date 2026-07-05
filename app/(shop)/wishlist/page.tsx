@@ -10,30 +10,36 @@ import { Product } from "@/types/Product";
 import ProductSlider from "@/features/best-selling/ProductSlider";
 import { SwiperSlide } from "swiper/react";
 import ProductSkeleton from "@/features/best-selling/ProductSkeleton";
-import LoadingButton from "@/components/ui/LoadingButton";
+import { WormLoader } from "@/components/ui/Emptywithloader";
 
 export default function CartPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
 useEffect(() => {
+  let mounted = true;
+
   async function loadProducts() {
-    try {
-      const data = await getProducts();
-      setProducts(data);
-    } finally {
-      setLoading(false);
-    }
+    const data = await getProducts();
+    if (mounted) setProducts(data);
+    setLoading(false);
   }
 
   loadProducts();
-}, []);
 
+  return () => {
+    mounted = false;
+  };
+}, []);
   const hydrated = useWishlistStore((state) => state._hydrated);
   const clearWishlist = useWishlistStore((state) => state.clearWishlist);
   const items = useWishlistStore((state) => state.items);
-  if (!hydrated) {
-  return <LoadingButton isLoading = {true} text="waiteing"/>;
+if (!hydrated || loading) {
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <WormLoader className="w-20 h-20" />
+    </div>
+  );
 }
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">

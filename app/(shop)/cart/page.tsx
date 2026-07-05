@@ -4,11 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { useCartStore } from "@/store/useCart";
+import { WormLoader } from "@/components/ui/Emptywithloader";
+import useWishlistStore from "@/store/useWishlistStore";
+import { useEffect, useState } from "react";
 
 export default function CartPage() {
+  const hydrated = useWishlistStore((state) => state._hydrated);
   const items = useCartStore((state) => state.items);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [])
+  if (!hydrated || loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <WormLoader className="w-20 h-20" />
+      </div>
+    );
+  }
   const total = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0

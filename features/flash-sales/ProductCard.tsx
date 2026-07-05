@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Product } from "@/types/Product";
 import { Eye } from "lucide-react";
 import { useState } from "react";
-import QuickViewModal from "@/components/ui/QuickViewModal";
+import QuickViewModal from "@/components/ui/Modal/QuickViewModal";
 import WishlistButton from "@/components/product/WishlistButton";
 import AddToCartButton from "@/components/product/AddToCartButton";
 

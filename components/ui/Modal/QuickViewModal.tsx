@@ -4,17 +4,25 @@ import Image from "next/image";
 import Link from "next/link";
 import { X, Star, ShoppingCart } from "lucide-react";
 import { Product } from "@/types/Product";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import WishlistButton from "@/components/product/WishlistButton";
 import AddToCartButton from "@/components/product/AddToCartButton";
-
+import styles from "./modal.module.css";
 type Props = {
   product: Product;
   onCloseAction: () => void;
 };
 
 export default function QuickViewModal({ product, onCloseAction }: Props) {
+  const [active, setActive] = useState(false);
+  const handleClose = () => {
+    setActive(true);
+
+    setTimeout(() => {
+      onCloseAction();
+    }, 200);
+  };
   const originalPrice =
     product.discount > 0
       ? (product.price / (1 - product.discount / 100)).toFixed(2)
@@ -23,6 +31,7 @@ export default function QuickViewModal({ product, onCloseAction }: Props) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     const handleEsc = (e: KeyboardEvent) => {
+
       if (e.key === "Escape") onCloseAction();
     };
     window.addEventListener("keydown", handleEsc);
@@ -30,26 +39,32 @@ export default function QuickViewModal({ product, onCloseAction }: Props) {
       document.body.style.overflow = "auto";
       window.removeEventListener("keydown", handleEsc);
     };
-  }, [onCloseAction]);
+
+  }, [onCloseAction,]);
 
   return createPortal(
     <div
       onClick={onCloseAction}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-lg p-3 sm:p-6 overflow-y-auto"
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-lg p-3 sm:p-6 overflow-y-auto ${styles.dropIn}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-2xl sm:max-w-4xl overflow-hidden rounded-2xl sm:rounded-3xl border border-white/30 bg-white/90 backdrop-blur-2xl shadow-[0_30px_90px_rgba(0,0,0,.25)] grid grid-cols-1 md:grid-cols-[1fr_1fr] my-auto"
       >
         {/* Background glow */}
-        <div className="pointer-events-none absolute -top-40 -left-32 h-96 w-96 rounded-full bg-red-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -top-40 -left-32 h-96 w-96 rounded-fullblur-3xl" />
 
         {/* Close */}
         <button
-          onClick={onCloseAction}
-          className="absolute right-3 sm:right-5 top-3 sm:top-5 z-20 flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 shadow-lg transition-all duration-300 hover:rotate-90 hover:bg-red-500"
-        >
-          <X size={18} />
+          onClick={handleClose}
+          className="absolute right-3 sm:right-5 top-3 sm:top-5 z-20 flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 shadow-lg transition-all duration-300 "
+          style={{
+            background:
+              "radial-gradient(136.47% 136.47% at 0% 0%, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.2) 100%)",
+          }}>
+
+          <X size={18} className={`transition-transform ${active ? "rotate-100 text-red-500" : ""
+            } duration-300 group-hover:rotate-90 group-active:rotate-90`} />
         </button>
 
         {/* LEFT — Image */}
@@ -92,9 +107,8 @@ export default function QuickViewModal({ product, onCloseAction }: Props) {
             </div>
             <span className="text-gray-300">|</span>
             <span
-              className={`font-medium text-xs sm:text-sm ${
-                product.stock > 0 ? "text-green-600" : "text-red-500"
-              }`}
+              className={`font-medium text-xs sm:text-sm ${product.stock > 0 ? "text-green-600" : "text-red-500"
+                }`}
             >
               {product.stock > 0 ? `${product.stock} In Stock` : "Out of Stock"}
             </span>

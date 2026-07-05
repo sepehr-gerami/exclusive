@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 
-interface AlertProps {
+export interface AlertProps {
   show: boolean;
   onClose: () => void;
   duration?: number;
@@ -13,7 +13,7 @@ interface AlertProps {
 
 export default function Alert({ show, onClose, title, sub, type = "success", duration = 4000 }: AlertProps) {
   const [hiding, setHiding] = useState(false)
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const variants = {
     success: {
@@ -119,7 +119,7 @@ export default function Alert({ show, onClose, title, sub, type = "success", dur
           }}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m4.5 12.75 6 6 9-13.5" />
+              {icons[type]}
             </svg>
           </div>
 
@@ -138,7 +138,7 @@ export default function Alert({ show, onClose, title, sub, type = "success", dur
             onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
             onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.28)")}
           >
-              <svg
+ <svg
   width="16"
   height="16"
   viewBox="0 0 24 24"

@@ -13,7 +13,7 @@ import {
   FaApple,
 } from "react-icons/fa";
 
-import Alert from "../ui/Alert";
+import Alert from "../ui/alert/Alert";
 
 type FieldKey = "email";
 

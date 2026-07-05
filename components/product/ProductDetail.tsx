@@ -3,6 +3,7 @@ import AddToCartButton from "@/components/product/AddToCartButton";
 import { getProduct } from "@/lib/api/Product";
 import Image from "next/image"
 import Link from "next/link";
+import WishlistButton from "./WishlistButton";
 
 export default async function ProductDetail({ id }: { id: string }) {
   const product = await getProduct(id);
@@ -96,14 +97,14 @@ export default async function ProductDetail({ id }: { id: string }) {
           <AddToCartButton
             product={product}
             disabled={product.stock === 0}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-medium transition"
+            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-medium transition-transform active:scale-95 md:hidden"
           >
             <ShoppingCart size={18} />
             Add to Cart
           </AddToCartButton>
 
-          <button className="w-12 h-12 border border-gray-200 rounded-lg flex items-center justify-center hover:border-red-400 hover:text-red-500 transition">
-            <Heart size={18} />
+          <button className="w-12 h-12 border border-gray-200 rounded-lg flex items-center justify-center hover:border-red-400 hover:text-red-500 transition-transform active:scale-95 ">
+            <WishlistButton product={product}/>
           </button>
         </div>
       </div>

@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
-function WormLoader() {
+interface WormLoaderProps {
+  className?: string;
+}
+export  function WormLoader({className }:WormLoaderProps) {
   return (
     <>
-      <style>{`
+      <style>{`${className ?? ""}
         .pl-worm-loader {
           animation: bump9 3s linear infinite;
           width: 8em;
@@ -40,7 +42,7 @@ function WormLoader() {
         }
       `}</style>
       <svg
-        className="pl-worm-loader"
+         className={`pl-worm-loader ${className ?? ""}`}
         viewBox="0 0 128 128"
         xmlns="http://www.w3.org/2000/svg"
         role="status"
@@ -90,7 +92,7 @@ export default function EmptyWithLoader() {
   return (
     <div className="flex flex-col items-center justify-center py-24 gap-6">
       {loading ? (
-        <WormLoader />
+        <WormLoader className="flex"/>
       ) : (
         <div className="flex flex-col items-center gap-3">
           <h2 className="text-2xl font-semibold text-gray-700">

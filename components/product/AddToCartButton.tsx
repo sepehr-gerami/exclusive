@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import { Product } from "@/types/Product";
 import { useAddToCart } from "@/store/useCart";
+import useAlert from "@/components/ui/alert/useAlert";
 
 interface AddToCartButtonProps {
   product: Product;
@@ -18,9 +19,16 @@ export default function AddToCartButton({
   children = "Add to Cart",
 }: AddToCartButtonProps) {
   const addToCart = useAddToCart();
+  const { showAlert } = useAlert();
 
   const handleClick = () => {
     addToCart(product);
+
+    showAlert({
+      title: "Added to Cart",
+      sub: product.title,
+      type: "success",
+    });
   };
 
   return (
