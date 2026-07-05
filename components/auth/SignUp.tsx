@@ -208,21 +208,18 @@ export default function SignUpPage() {
                 handleChange("name", e.target.value)
               }
               className="
-border-0
+
 outline-none
-focus:outline-none
 focus:ring-0
-rounded-[15px]
 p-[1em]
-bg-[#ccc]
 shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
 transition-all
 duration-300
 ease-in-out
-
 focus:bg-white
 focus:scale-105
 focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
+rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none
 "
               placeholder="name"
             />
@@ -239,22 +236,17 @@ focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
               onKeyDown={(e) => handleEnter(e, passRef)}
               onChange={(e) => handleChange("email", e.target.value)}
               className="
-border-0
 outline-none
-focus:outline-none
 focus:ring-0
-rounded-[15px]
 p-[1em]
-bg-[#ccc]
 shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
 transition-all
 duration-300
 ease-in-out
-
 focus:bg-white
 focus:scale-105
 focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
-"
+rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
               placeholder="Email"
             />
             {states.email === "error" && (
@@ -279,13 +271,9 @@ focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
                     handleChange("password", e.target.value)
                   }
                   className="
-w-full
-pr-12
-border-0
 outline-none
-rounded-[15px]
+focus:ring-0
 p-[1em]
-bg-[#ccc]
 shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
 transition-all
 duration-300
@@ -293,7 +281,7 @@ ease-in-out
 focus:bg-white
 focus:scale-105
 focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
-"
+rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
                   placeholder="Password"
                 />
                 <button

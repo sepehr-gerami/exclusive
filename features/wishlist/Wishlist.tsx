@@ -22,7 +22,7 @@ export default function Wishlist() {
 
       {/* Badge (SYNC with Zustand) */}
       {hydrated && count > 0 && (
-        <span className="absolute ...">
+        <span className="absolute -top-1 -right-1 z-20 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-semibold text-white">
           {count}
         </span>
       )}

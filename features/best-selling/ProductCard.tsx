@@ -1,6 +1,5 @@
 "use client";
 
-// app/features/best-selling/ProductCard.tsx
 
 import Image from "next/image";
 import Link from "next/link";
@@ -10,13 +9,28 @@ import WishlistButton from "@/components/product/WishlistButton";
 import QuickViewModal from "@/components/ui/QuickViewModal";
 import { useState } from "react";
 import AddToCartButton from "@/components/product/AddToCartButton";
+import { Trash2 } from "lucide-react";
+import useWishlistStore from "@/store/useWishlistStore";
 
-export default function ProductCard({ product }: { product: Product }) {
+interface ProductCardProps {
+  product: Product;
+  showWishlistButton?: boolean;
+  showRemoveButton?: boolean;
+  showEyeButton?: boolean;
+}
+
+export default function ProductCard({
+  product,
+  showWishlistButton = true,
+  showRemoveButton = true,
+  showEyeButton = true }: ProductCardProps) {
+
   const originalPrice =
     product.discount > 0
       ? (product.price / (1 - product.discount / 100)).toFixed(0)
       : null;
   const [isOpen, setIsOpen] = useState(false);
+  const removeFromWishlist = useWishlistStore((s) => s.removeFromWishlist)
   return (
     <Link
       href={`/product/${product.id}`}
@@ -33,18 +47,36 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* ── Action icons (heart + eye) ── */}
       <div className="absolute top-3 right-3 z-10 flex flex-col gap-2">
-        <WishlistButton product={product} />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsOpen(true);
-          }}
-          className="w-8 h-8 bg-white rounded-full flex items-center justify-center
+        {showRemoveButton && (
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              removeFromWishlist(product.id);
+            }}
+            className="w-8 h-8 bg-white cursor-pointer rounded-full flex items-center justify-center
+                 shadow hover:bg-red-500 hover:text-white transition"
+          >
+            <Trash2 size={14} />
+          </button>
+        )}
+        {showWishlistButton &&
+          <WishlistButton product={product} />}
+
+        {showWishlistButton &&
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setIsOpen(true);
+            }}
+            className="w-8 h-8 bg-white rounded-full flex items-center justify-center
                   shadow hover:bg-red-500 hover:text-white transition"
-        >
-          <Eye size={14} />
-        </button>
+          >
+            {showEyeButton &&  <Eye size={14} />}
+       
+          </button>
+        }
       </div>
 
       {isOpen && (
@@ -56,25 +88,25 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* ── Image + Add to Cart hover ── */}
 
-<div className="relative w-[80%] aspect-square bg-[#F5F5F5] overflow-hidden flex items-center justify-center mx-auto">
-  <Image
-    src={product.thumbnail}
-    alt={product.title}
-    width={200}
-    height={200}
-    className="w-[80%] h-[80%] object-contain"
-  />
+      <div className="relative w-[80%] aspect-square bg-[#F5F5F5] overflow-hidden flex items-center justify-center mx-auto">
+        <Image
+          src={product.thumbnail}
+          alt={product.title}
+          width={200}
+          height={200}
+          className="w-[80%] h-[80%] object-contain"
+        />
 
-  <AddToCartButton
-    product={product}
-    className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
+        <AddToCartButton
+          product={product}
+          className="absolute bottom-0 left-0 right-0 py-2.5 bg-black text-white
                text-sm font-medium text-center
                translate-y-full group-hover:translate-y-0
                transition-transform duration-300"
-  >
-    Add to Cart
-  </AddToCartButton>
-</div>
+        >
+          Add to Cart
+        </AddToCartButton>
+      </div>
 
       {/* ── Info ── */}
       <div className="p-3 flex flex-col gap-1">

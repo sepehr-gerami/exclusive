@@ -54,7 +54,19 @@ export default function SearchInput() {
           }}
           onFocus={() => setIsOpen(true)}
           placeholder="Search products..."
-          className={styles.input}
+          className="
+outline-none
+focus:ring-0
+p-[1em]
+shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
+transition-all
+duration-300
+ease-in-out placeholder:pl-4
+focus:bg-white
+focus:scale-102
+ w-full
+focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
+rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
         />
 
         {query && (

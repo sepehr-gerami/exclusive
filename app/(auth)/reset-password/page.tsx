@@ -34,7 +34,17 @@ export default function ResetPassPage() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
+            className="w-full outline-none
+focus:ring-0
+p-[1em]
+shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
+transition-all
+duration-300
+ease-in-out
+focus:bg-white
+focus:scale-105
+focus:shadow-[13px_13px_100px_#969696,-13px_-13px_100px_#ffffff]
+rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
             placeholder="Email or phone number"
           />
         </div>

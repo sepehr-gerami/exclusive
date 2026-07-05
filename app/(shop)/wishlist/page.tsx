@@ -3,61 +3,122 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import useWishlistStore from "@/store/useWishlistStore";
+import ProductCard from "@/features/best-selling/ProductCard";
+import { getProducts } from "@/lib/api/Product";
+import { useEffect, useState } from "react";
+import { Product } from "@/types/Product";
+import ProductSlider from "@/features/best-selling/ProductSlider";
+import { SwiperSlide } from "swiper/react";
+import ProductSkeleton from "@/features/best-selling/ProductSkeleton";
+import LoadingButton from "@/components/ui/LoadingButton";
 
 export default function CartPage() {
-  const count = useWishlistStore((state) => state.getWishlistCount());
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  async function loadProducts() {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  loadProducts();
+}, []);
+
   const hydrated = useWishlistStore((state) => state._hydrated);
   const clearWishlist = useWishlistStore((state) => state.clearWishlist);
+  const items = useWishlistStore((state) => state.items);
+  if (!hydrated) {
+  return <LoadingButton isLoading = {true} text="waiteing"/>;
+}
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">
 
       {/* Breadcrumb */}
       <div className="flex gap-2 text-sm text-gray-500 mb-8">
-        <Link href="/">Home</Link>
+        <Link href="/" className="hover:text-red-500 transition">Home</Link>
         <span>/</span>
         <span className="text-black font-medium">wishlist</span>
       </div>
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-3xl font-bold">
+          Wishlist ({items.length})
+        </h2>
 
-      <h1 className="text-3xl font-bold mb-8">
-        {hydrated && count > 0 && (
-          <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-white text-[10px]">
-            {count}
-          </span>
-        )}
-      </h1>
-
-                  <button
-                    onClick={clearWishlist}
-                    className="rounded-lg p-2 text-red-500 transition hover:bg-red-50"
-                  >
-                    <Trash2 size={22} />
-                  </button>
-
-          {/* Summary */}
-
-          <div className="mt-10 w-full max-w-md rounded-xl border p-6 shadow-sm">
-
-            <h2 className="text-xl font-semibold mb-6">
-              Order Summary
-            </h2>
-
-            <div className="flex justify-between mb-3">
-              <span>Shipping</span>
-              <span>Free</span>
-            </div>
-
-            <hr className="my-5" />
-
-            <Link
-              href="/checkout"
-              className="mt-6 flex justify-center rounded-md bg-red-500 py-3 font-medium text-white transition hover:bg-red-600"
-            >
-              Proceed to Checkout
-            </Link>
-
+        <button
+          onClick={clearWishlist}
+          className=" text-red-500 transition-all  rounded-2xl  hover:bg-red-50 hover:scale-98"
+        >
+          <div className="flex flex-row items-center justify-center gap-4 cursor-pointer border border-gray-200  rounded-2xl py-2 px-2">
+            <span className=" text-2xl font-bold ">Move All To Bag</span>
+            <Trash2 size={22} />
           </div>
-      
+        </button>
 
-    </section>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+        {items.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            showWishlistButton={false}
+            showRemoveButton={true}
+          />
+        ))}
+
+      </div>
+
+
+      <hr className="mt-16 border-gray-200" />
+
+      <div className="container mx-auto px-4 mt-20">
+        {/* HEADER */}
+        <div className="flex flex-col gap-4 mb-10 md:flex-row md:items-end md:justify-between">
+          <div>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-4 h-8 bg-red-500 rounded-sm" />
+              <span className="text-red-500 font-semibold">
+                Just For You
+              </span>
+            </div>
+          </div>
+
+          <Link href={'/product'}>
+            <button className="cursor-pointer rounded-2xl border border-gray-200 px-4 py-2 transition-all hover:scale-98 "
+              style={{
+                background:
+                  "radial-gradient(136.47% 136.47% at 0% 0%, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.2) 100%)",
+              }}>
+              <p className="text-2xl text-gray-900 font-bold hover:text-gray-800/75 ">
+                See All
+              </p>
+            </button>
+          </Link>
+        </div>
+        <ProductSlider>
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+              <SwiperSlide key={i}>
+                <ProductSkeleton />
+              </SwiperSlide>
+            ))
+            : products.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductCard
+                  product={product}
+                  showWishlistButton={true}
+                  showRemoveButton={false}
+                />
+              </SwiperSlide>
+            ))}
+        </ProductSlider>
+
+      </div>
+    </section >
   );
 }

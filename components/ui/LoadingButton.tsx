@@ -7,12 +7,13 @@ interface ButtonProps {
 }
 export default function LoadingButton({ isLoading, loadingText,text, onClick }: ButtonProps) {
   return (
+    <div className="flex justify-center items-center ">
     <button
       onClick={onClick}
       disabled={isLoading}
-      className="flex justify-center items-center w-full text-start gap-2 bg-red-500 hover:bg-red-600
+      className="flex justify-center items-center  text-start cursor-pointer gap-2 bg-red-500 hover:bg-red-600
         disabled:opacity-70 disabled:cursor-not-allowed
-        text-white px-10 py-3 rounded text-sm font-medium transition"
+        text-white px-10 py-3 rounded-2xl w-fit text-sm font-medium transition"
     >
       {isLoading && (
         <svg className="animate-spin h-4 w-4 text-white"
@@ -25,5 +26,7 @@ export default function LoadingButton({ isLoading, loadingText,text, onClick }: 
       )}
       {isLoading ? (loadingText ?? "loading...") : text}
     </button>
+
+    </div>
   )
 }

@@ -19,7 +19,7 @@ export default function CartPage() {
 
       {/* Breadcrumb */}
       <div className="flex gap-2 text-sm text-gray-500 mb-8">
-        <Link href="/">Home</Link>
+        <Link href="/" className="hover:text-red-500 transition">Home</Link>
         <span>/</span>
         <span className="text-black font-medium">Cart</span>
       </div>

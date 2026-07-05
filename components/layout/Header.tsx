@@ -33,10 +33,14 @@ export default function Header() {
           </div>
 
           {/* Desktop Right */}
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center mx-5  gap-15 lg:flex">
+
             <SearchInput />
+          <div className="hidden items-center  lg:flex">
             <Wishlist />
             <Basket />
+          </div>
+
           </div>
 
           {/* Mobile Right */}
