@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { EyeOff, Eye } from 'lucide-react';
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/useAuthStore";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRegex = /^\d{10,15}$/;
 
@@ -34,6 +35,13 @@ type Toast = {
     sub: string;
 };
 export default function LoginPage() {
+
+
+    const login = useAuthStore((s) => s.login);
+    const authError = useAuthStore((s) => s.error);
+    const loading = useAuthStore((s) => s.loading);
+    const router = useRouter();
+
     const [values, setValues] = useState<Record<FieldKey, string>>({
 
         email: "",
@@ -47,11 +55,10 @@ export default function LoginPage() {
     });
 
     const [toasts, setToasts] = useState<Toast[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const emailRef = useRef<HTMLInputElement>(null);
     const passRef = useRef<HTMLInputElement>(null);
     const [showPassword, setShowPassword] = useState(false);
-     const router = useRouter();
+
     const handleEnter = (
         e: React.KeyboardEvent<HTMLInputElement>,
         nextRef: React.RefObject<HTMLInputElement | null> | null,
@@ -85,7 +92,6 @@ export default function LoginPage() {
     };
 
     const handleSubmitForm = async () => {
-
         const keys: FieldKey[] = ["email", "password"];
 
         const newStates = keys.reduce((acc, k) => {
@@ -104,32 +110,49 @@ export default function LoginPage() {
                 title: "Validation Error",
                 sub: "Please correct the highlighted fields and try again.",
             });
+
             return;
         }
 
-        setIsLoading(true);
+        const success = await login(values.email, values.password);
 
-        await new Promise((r) => setTimeout(r, 1000));
+        if (!success) {
+            addToast({
+                id: "error-" + Date.now(),
+                type: "error",
+                title: "Login Failed",
+                sub: "Please check your email and password.",
+            });
 
-        setIsLoading(false);
+            return;
+        }
 
         addToast({
             id: "success-" + Date.now(),
             type: "success",
-            title: "Account Created",
-            sub: "Your account has been created successfully.",
+            title: "Welcome Back 👋",
+            sub: "Login successful.",
         });
 
-        setValues({ email: "", password: "" });
-        setStates({ email: "idle", password: "idle" });
+        setValues({
+            email: "",
+            password: "",
+        });
+
+        setStates({
+            email: "idle",
+            password: "idle",
+        });
+
         setTimeout(() => {
-  router.push("/");
-}, 1000);
+            router.push("/");
+        }, 800);
     };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         await handleSubmitForm();
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-3">
@@ -241,9 +264,9 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
                                 </button>
                             </div>
 
-                            {states.password === "error" && (
-                                <p className="text-red-500 text-sm">
-                                    {rules.password.error}
+                            {authError && (
+                                <p className="mt-2 text-sm text-red-500">
+                                    {authError}
                                 </p>
                             )}
                         </div>
@@ -254,7 +277,7 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
 
                         <div className="flex flex-col gap-6 mt-6 items-center">
                             <LoadingButton
-                                isLoading={isLoading}
+                                isLoading={loading}
                                 loadingText="Login..."
                                 text="Login"
                             />

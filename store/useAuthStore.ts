@@ -40,6 +40,7 @@ export const useAuthStore = create<AuthState>()(
 
         set({
           loading: false,
+          error: null,
           user: {
             id: normalizedEmail,
             email: normalizedEmail,
@@ -74,7 +75,11 @@ export const useAuthStore = create<AuthState>()(
       },
 
       logout: () => {
-        set({ user: null });
+        set({
+          user: null,
+          error: null,
+          loading: false,
+        });
       },
 
       requestPasswordReset: async (email) => {

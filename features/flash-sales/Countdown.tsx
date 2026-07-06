@@ -28,7 +28,7 @@ export default function Countdown() {
 
 
   return (
-    <div className="flex items-end gap-4 cursor-default">
+    <div className="flex items-end gap-4 pt-10 px-8 cursor-default">
   <div className="text-center">
     <p className="text-xs uppercase font-semibold">Days</p>
     <p className="text-3xl font-bold">{days}</p>

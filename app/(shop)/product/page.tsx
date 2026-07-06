@@ -27,7 +27,7 @@ export default async function ProductPage({ searchParams }: Props) {
       </div>
 
       {isSpecial ? (
-        <EmptyWithLoader />
+        <EmptyWithLoader className="w-20 h-20" />
       ) : (
         <Suspense fallback={<ProductSkeleton />}>
           <ProductGrid category={category} />

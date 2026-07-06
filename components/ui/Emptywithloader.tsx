@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 interface WormLoaderProps {
   className?: string;
 }
-export  function WormLoader({className }:WormLoaderProps) {
+export function WormLoader({className }:WormLoaderProps) {
   return (
     <>
       <style>{`${className ?? ""}
@@ -81,28 +81,38 @@ export  function WormLoader({className }:WormLoaderProps) {
   );
 }
 
-export default function EmptyWithLoader() {
+
+interface EmptyStateProps {
+  delay?: number;
+}
+
+export default function EmptyState({
+  delay = 2500,
+}: EmptyStateProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2500);
+    const timer = setTimeout(() => setLoading(false), delay);
     return () => clearTimeout(timer);
-  }, []);
+  }, [delay]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <WormLoader className="w-20 h-20" />
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col items-center justify-center py-24 gap-6">
-      {loading ? (
-        <WormLoader className="flex"/>
-      ) : (
-        <div className="flex flex-col items-center gap-3">
-          <h2 className="text-2xl font-semibold text-gray-700">
-            No products found
-          </h2>
-          <p className="text-sm text-gray-400">
-            This category is currently empty.
-          </p>
-        </div>
-      )}
+    <div className="flex flex-col items-center justify-center py-24">
+      <h2 className="text-2xl font-semibold text-gray-700">
+        No products found
+      </h2>
+
+      <p className="mt-2 text-sm text-gray-400">
+        This category is currently empty.
+      </p>
     </div>
   );
 }

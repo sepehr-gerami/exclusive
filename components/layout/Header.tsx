@@ -9,6 +9,7 @@ import Wishlist from "@/features/wishlist/Wishlist";
 import Basket from "@/features/basket/Basket";
 import SearchInput from "../ui/search-box/SearchInput";
 import MobileMenu from "./MobileMenu";
+import UserAccount from "@/features/account/Account";
 
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -36,9 +37,10 @@ export default function Header() {
           <div className="hidden items-center mx-5  gap-15 lg:flex">
 
             <SearchInput />
-          <div className="hidden items-center  lg:flex">
+          <div className="hidden items-center gap-1 lg:flex">
             <Wishlist />
             <Basket />
+            <UserAccount/>
           </div>
 
           </div>

@@ -57,7 +57,7 @@ export default function QuickViewModal({ product, onCloseAction }: Props) {
         {/* Close */}
         <button
           onClick={handleClose}
-          className="absolute right-3 sm:right-5 top-3 sm:top-5 z-20 flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 shadow-lg transition-all duration-300 "
+          className="absolute right-3 cursor-pointer sm:right-5 top-3 sm:top-5 z-20 flex h-10 sm:h-11 w-10 sm:w-11 items-center justify-center rounded-full border border-gray-200 bg-white/80 shadow-lg transition-all duration-300 "
           style={{
             background:
               "radial-gradient(136.47% 136.47% at 0% 0%, rgba(0,0,0,0.2) 0%, rgba(255,255,255,0.2) 100%)",

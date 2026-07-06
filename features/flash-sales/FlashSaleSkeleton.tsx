@@ -16,7 +16,7 @@ export default function FlashSaleSkeleton() {
             <Skeleton width={220} height={40} />
           </div>
 
-          <div className="flex gap-6">
+          <div className="flex gap-6 pt-10 px-8 ">
             {[1, 2, 3, 4].map((i) => (
               <div key={i}>
                 <Skeleton width={40} height={12} />
