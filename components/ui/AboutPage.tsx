@@ -6,23 +6,20 @@ import React from 'react'
 import StatsSection from '@/components/ui/StatsSection'
 import TeamSection from '@/components/ui/TeamSection' 
 import ServiceStrip from '@/features/services/ServiceStrip'
-import { useIsMobile } from '@/hooks/use-mobile'
 export default function About() {
-    const isMobile = useIsMobile();
-    
   return (
-    <section className="px-20 py-16">
+    <section className="px-4 py-10 sm:px-8 sm:py-12 lg:px-20 lg:py-16">
       {/* Breadcrumb */}
-      <div className="flex gap-2 text-sm text-gray-500 mb-12">
+      <div className="flex gap-2 text-sm text-gray-500 mb-8 lg:mb-12">
         <Link href="/" className="hover:text-red-500 transition">Home</Link>
         <span>/</span>
         <span className="font-medium text-black">About</span>
       </div>
       {/* Story content */}
-      <div className={isMobile ? "grid-cols-1" : "grid grid-cols-2 items-center gap-20"}>
+      <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-20">
         {/* Left */}
-        <div className="space-y-8">
-          <h1 className="text-5xl font-bold">Our Story</h1>
+        <div className="space-y-6 lg:space-y-8">
+          <h1 className="text-3xl font-bold sm:text-4xl lg:text-5xl">Our Story</h1>
           <p className="text-gray-600 leading-8">
             Launched in 2015, Exclusive is South Asia`s premier online shopping
             marketplace with an active presence in Bangladesh. Supported by a wide
@@ -37,15 +34,15 @@ export default function About() {
           </p>
         </div>
         {/* Right */}
-        <div className="flex justify-end">
-          <div className="overflow-hidden rounded-xl group">
+        <div className="flex justify-center lg:justify-end">
+          <div className="overflow-hidden rounded-xl group w-full max-w-md lg:max-w-none">
             <Image
               src="/HeroBanner/SideImage.png"
               alt="About"
               width={705}
               height={609}
               className="
-                object-cover transition-all duration-700 ease-out
+                h-auto w-full object-cover transition-all duration-700 ease-out
                 scale-100 brightness-95
                 group-hover:scale-110 group-hover:brightness-100
               "

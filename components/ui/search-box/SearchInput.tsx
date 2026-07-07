@@ -1,113 +1,206 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { BiSearch } from "react-icons/bi";
-import { FiX } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
+import { Loader2, Search, X } from "lucide-react";
 import { Product } from "@/types/Product";
 import { getProducts } from "@/lib/api/Product";
-import styles from "@/components/ui/search-box/search-box.module.css";
-
 export default function SearchInput() {
+
+
+  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
 
   useEffect(() => {
     getProducts().then(setProducts);
   }, []);
 
-  const results = products
-    .filter((p) => p.title.toLowerCase().includes(query.toLowerCase()))
-    .slice(0, 8);
+  useEffect(() => {
+    if (!query.trim()) {
+      setLoading(false);
+      return;
+    }
 
-  const clearSearch = () => {
-    setQuery("");
-    setIsOpen(false);
-  };
+    setLoading(true);
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 550);
+
+    return () => clearTimeout(timer);
+  }, [query]);
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+    const click = (e: MouseEvent) => {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    document.addEventListener("mousedown", click);
+
+    return () => {
+      document.removeEventListener("mousedown", click);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    const esc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", esc);
+
+    return () => {
+      window.removeEventListener("keydown", esc);
+    };
   }, []);
 
+  const results = useMemo(() => {
+    return products
+      .filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase())
+      )
+      .slice(0, 8);
+  }, [products, query]);
+
+  const clearSearch = () => {
+    setQuery("");
+    setLoading(false);
+    setIsOpen(false);
+
+    inputRef.current?.focus();
+  };
   return (
-    <div ref={dropdownRef} className={styles.wrapper}>
-      {/* INPUT */}
-      <div className={styles.shell}>
-        <span className={styles.iconLeft}>
-          <BiSearch />
-        </span>
+    <div ref={wrapperRef} className="relative max-w-fit">
+      <div className="relative">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2">
+          {loading ? (
+            <Loader2
+              size={18}
+              className="animate-spin text-red-500"
+            />
+          ) : (
+            <Search
+              size={18}
+              className="text-gray-800"
+            />
+          )}
+        </div>
 
         <input
+          ref={inputRef}
           value={query}
+          onFocus={() => setIsOpen(true)}
           onChange={(e) => {
             setQuery(e.target.value);
             setIsOpen(true);
           }}
-          onFocus={() => setIsOpen(true)}
           placeholder="Search products..."
           className="
-outline-none
-focus:ring-0
-mt-2.5
-p-[1em]
-shadow-[inset_2px_5px_10px_rgba(0,0,0,0.3)]
-transition-all
-duration-300
-ease-in-out placeholder:pl-4
-focus:bg-white
-focus:scale-102
- w-full
-
-rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 focus:outline-none"
+    h-11
+    w-full
+  rounded-full
+    border
+    border-gray-200
+    bg-white
+    pl-11
+    pr-10
+    text-sm
+    outline-none
+    transition
+    focus:border-red-500
+  "
         />
 
+
+
+
+
         {query && (
-          <button onClick={clearSearch} className={styles.clearBtn}>
-            <FiX />
+          <button
+            onClick={clearSearch}
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+          >
+            <X size={18} />
           </button>
         )}
       </div>
 
-      {/* DROPDOWN */}
-      {isOpen && query && (
-        <div className={styles.dropdown}>
-          {results.length > 0 ? (
-            results.map((product) => (
-              <Link
-                key={product.id}
-                href={`/product/${product.id}`}
-                onClick={clearSearch}
-                className={styles.item}
-              >
-                <Image
-                  src={product.thumbnail}
-                  alt={product.title}
-                  width={38}
-                  height={38}
-                  className={styles.thumb}
-                />
-                <div className={styles.itemInfo}>
-                  <span className={styles.itemTitle}>{product.title}</span>
-                  <span className={styles.itemPrice}>${product.price}</span>
-                </div>
-              </Link>
-            ))
-          ) : (
-            <div className={styles.empty}>
-              No results for &ldquo;{query}&rdquo;
-            </div>
-          )}
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && query && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="
+    absolute
+    top-full
+    mt-5
+    z-50
+    w-65
+    -left-1/3
+    
+    overflow-hidden
+    rounded-md
+  bg-black/40
+  backdrop-blur-xl
+  shadow-2xl
+    max-h-80
+    overflow-y-auto
+  "
+          >
+            {results.length ? (
+              results.map((product) => (
+                <Link
+                  key={product.id}
+                  href={`/product/${product.id}`}
+                  onClick={() => {
+                    setIsOpen(false);
+                    setQuery("");
+                  }}
+                  className="flex items-center gap-3 p-3 hover:bg-gray-50"
+                >
+                  <Image
+                    src={product.thumbnail}
+                    alt={product.title}
+                    width={40}
+                    height={40}
+                    className="rounded-md  object-contain"
+                  />
+
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm text-white font-medium">
+                      {product.title}
+                    </p>
+                    <span className="text-xs text-red-500">
+                      ${product.price}
+                    </span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="p-4 text-center text-sm text-gray-400">
+                No results found
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

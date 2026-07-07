@@ -26,13 +26,17 @@ export default async function ProductPage({ searchParams }: Props) {
         <span className="text-black font-medium">{category ?? "Product"}</span>
       </div>
 
-      {isSpecial ? (
-        <EmptyWithLoader className="w-20 h-20" />
-      ) : (
-        <Suspense fallback={<ProductSkeleton />}>
-          <ProductGrid category={category} />
-        </Suspense>
-      )}
+      <Suspense
+  fallback={
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <ProductSkeleton key={i} />
+      ))}
+    </div>
+  }
+>
+  <ProductGrid category={category} />
+</Suspense>
     </section>
   );
 }

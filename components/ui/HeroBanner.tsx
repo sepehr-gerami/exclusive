@@ -32,35 +32,22 @@ const banners = [
 export default function HeroBanner() {
     return (
         <>
-            <style>{`
-                .hero-swiper .swiper-pagination { bottom: 14px; }
-                .hero-swiper .swiper-pagination-bullet {
-                    width: 8px; height: 8px;
-                    background: rgba(255,255,255,0.35);
-                    opacity: 1;
-                    transition: all 0.3s ease;
-                }
-                .hero-swiper .swiper-pagination-bullet-active {
-                    background: #DB4444;
-                    width: 22px;
-                    border-radius: 4px;
-                }
-            `}</style>
+
 
             <Swiper
                 modules={[Autoplay, Pagination]}
                 loop
                 autoplay={{ delay: 7000 }}
                 pagination={{ clickable: true }}
-                className="hero-swiper overflow-hidden rounded-2xl bg-black h-95"
+                className="hero-swiper h-50 overflow-hidden rounded-2xl bg-black sm:h-72 lg:h-96"
             >
                 {banners.map((banner, index) => (
                     <SwiperSlide key={index} className="h-full">
-                        <div className="flex items-center justify-between h-full pl-16 px-5  text-white">
+                        <div className="flex h-full items-center justify-between px-4 sm:px-5 md:px-8 lg:pl-16 text-white">
 
                             {/* Left: Text */}
-                            <div>
-                                <div className="flex items-center gap-2 mb-4">
+                            <div className="w-[55%] text-left">
+                                <div className="mb-3 flex items-center gap-2">
 
                                     {banner.brand === "apple" && (
                                         <Image
@@ -98,25 +85,25 @@ export default function HeroBanner() {
 
                                 </div>
 
-                                <h2 className="text-5xl font-bold max-w-xs leading-tight mb-8">
+                                <h2 className="max-w-xs text-xl font-bold leading-tight sm:text-3xl lg:text-5xl">
                                     {banner.title}
                                 </h2>
 
-                                <button className="flex items-center cursor-pointer gap-2 text-sm border-b border-white pb-0.5 hover:opacity-60 transition-opacity">
+                                <button className="mt-6 flex cursor-pointer items-center gap-2 border-b border-white pb-0.5 text-sm transition-opacity hover:opacity-60">
                                     Shop Now →
                                 </button>
                             </div>
 
 
                             {/* Right: Image */}
-                            <div className="relative w-85 max-w-md h-85 overflow-hidden rounded-xl ">
+                            <div className="relative  h-36 w-38  mb-4 shrink-0 sm:h-56 sm:w-56 lg:h-80 lg:w-80">
                                 <div className="absolute inset-0 animate-zoomSlow">
                                     <Image
                                         src={banner.image}
                                         alt={banner.title}
                                         fill
                                         unoptimized
-                                        className="object-cover "
+                                        className="object-contain rounded-3xl pl-5"
                                     />
                                 </div>
                             </div>

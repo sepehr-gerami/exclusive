@@ -4,14 +4,14 @@ function SkeletonBox({ className }: { className?: string }) {
 
 export default function ContactSkeleton() {
   return (
-    <section className="flex flex-col px-20 py-10">
+    <section className="flex flex-col px-6 py-10 sm:px-8 lg:px-20">
       <div className="flex gap-2 mb-10">
         <SkeletonBox className="h-3 w-10" />
         <SkeletonBox className="h-3 w-2" />
         <SkeletonBox className="h-3 w-16" />
       </div>
-      <div className="grid grid-cols-3 gap-6">
-        <div className="border border-gray-200 rounded-md p-8 flex flex-col gap-8">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="border border-gray-200 rounded-md p-5 flex flex-col gap-8 sm:p-8">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3">
               <SkeletonBox className="w-11 h-11 rounded-full" />
@@ -31,8 +31,8 @@ export default function ContactSkeleton() {
             <SkeletonBox className="h-3 w-4/5" />
           </div>
         </div>
-        <div className="col-span-2 flex flex-col gap-4 p-4">
-          <div className="grid grid-cols-3 gap-4">
+        <div className="lg:col-span-2 flex flex-col gap-4 p-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <SkeletonBox className="h-11 rounded" />
             <SkeletonBox className="h-11 rounded" />
             <SkeletonBox className="h-11 rounded" />

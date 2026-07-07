@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 import TopHeader from "./TopHeader";
+import BottomNav from "./BottomNav";
 import ScrollToTop from "../ui/ScrollToTop";
 
 const AUTH_ROUTES_HIDE_LAYOUT = ["/login", "/sign-up", "/reset-password"];
@@ -25,11 +26,12 @@ export default function LayoutWrapper({
         </>
       )}
 
-      <main>{children}</main>
+      <main className={!hideLayout ? "pb-16 lg:pb-0" : ""}>{children}</main>
 
       <ScrollToTop />
 
       {!hideLayout && <Footer />}
+      {!hideLayout && <BottomNav />}
     </>
   );
 }

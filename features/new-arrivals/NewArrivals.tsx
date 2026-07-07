@@ -56,12 +56,12 @@ export default function NewArrivals() {
       </div>
       <h2 className="mt-4 mb-8 font-bold text-3xl">New Arrival</h2>
 
-      <div className="grid grid-cols-2 grid-rows-2 gap-4 h-150">
-        <BentoCard item={items[0]} className="row-span-2" />
-        <BentoCard item={items[1]} />
+      <div className="grid grid-cols-1 gap-4 sm:h-150 sm:grid-cols-2 sm:grid-rows-2">
+        <BentoCard item={items[0]} className="h-64 sm:row-span-2 sm:h-auto" />
+        <BentoCard item={items[1]} className="h-56 sm:h-auto" />
         <div className="grid grid-cols-2 gap-4">
-          <BentoCard item={items[2]} />
-          <BentoCard item={items[3]} />
+          <BentoCard item={items[2]} className="h-40 sm:h-auto" />
+          <BentoCard item={items[3]} className="h-40 sm:h-auto" />
         </div>
       </div>
     </section>
@@ -82,12 +82,12 @@ function BentoCard({ item, className = "" }: { item: Item; className?: string })
         className="object-cover opacity-80 transition-transform duration-500 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
-      <div className="absolute bottom-6 left-6 text-white z-10">
-        <h3 className="text-xl font-bold leading-tight">{item.title}</h3>
-        <p className="text-sm text-gray-300 mt-1 max-w-45">{item.description}</p>
+      <div className="absolute bottom-4 left-4 text-white z-10 sm:bottom-6 sm:left-6">
+        <h3 className="text-base font-bold leading-tight sm:text-xl">{item.title}</h3>
+        <p className="hidden text-sm text-gray-300 mt-1 max-w-45 sm:block">{item.description}</p>
         <Link
           href={item.href}
-          className="inline-block mt-3 text-sm font-semibold underline underline-offset-4 hover:text-red-400 transition"
+          className="inline-block mt-2 text-xs font-semibold underline underline-offset-4 hover:text-red-400 transition sm:mt-3 sm:text-sm"
         >
           Shop Now
         </Link>

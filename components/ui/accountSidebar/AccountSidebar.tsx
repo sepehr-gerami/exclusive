@@ -48,14 +48,14 @@ const menu = [
 export default function AccountSidebar() {
     const pathname = usePathname();
   return (
-   <nav className="w-64 shrink-0">
+   <nav className="w-full lg:w-64 lg:shrink-0">
   {menu.map((section) => (
-    <div key={section.title} className="mb-8">
+    <div key={section.title} className="mb-6 lg:mb-8">
       <h3 className="mb-3 font-semibold text-gray-900">
         {section.title}
       </h3>
 
-      <ul className="space-y-2">
+      <ul className="flex flex-wrap gap-x-5 gap-y-2 lg:block lg:space-y-2">
         {section.items.map((item) => {
           const active = pathname === item.href;
 
@@ -63,7 +63,7 @@ export default function AccountSidebar() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`block pl-4 transition ${
+                className={`block transition lg:pl-4 ${
                   active
                     ? "text-red-500 font-medium"
                     : "text-gray-500 hover:text-black"

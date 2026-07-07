@@ -14,7 +14,7 @@ export default function CategorySidebar() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:bg-red-600 transition"
+        className="lg:hidden fixed bottom-20 left-4 z-40 w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg hover:bg-red-600 transition"
       >
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
@@ -22,7 +22,7 @@ export default function CategorySidebar() {
       {/* Overlay for mobile */}
       {isOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setIsOpen(false)}
         />
       )}
@@ -38,7 +38,7 @@ export default function CategorySidebar() {
           py-8 px-0 lg:px-0
           flex flex-col
           transform transition-transform duration-300 lg:transform-none
-          z-35
+          z-50
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
         `}
       >

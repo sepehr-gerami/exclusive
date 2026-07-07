@@ -110,7 +110,7 @@ export default function StatsSection() {
     }, [])
 
     return (
-        <div ref={ref} className="grid grid-cols-4 gap-4 mt-20 px-20">
+        <div ref={ref} className="grid grid-cols-2 gap-4 mt-10 px-4 sm:mt-14 sm:px-8 md:grid-cols-4 lg:mt-20 lg:px-20">
             {stats.map((s, i) => (
                 <StatCard key={i} {...s} started={started} />
             ))}

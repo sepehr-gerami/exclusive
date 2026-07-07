@@ -31,7 +31,7 @@ export default function ExploreProductsGrid({
               Our Products
             </span>
           </div>
-          <h2 className="text-3xl font-bold">Explore Our Products</h2>
+          <h2 className="text-2xl font-bold sm:text-3xl">Explore Our Products</h2>
         </div>
 
         {/* arrows */}

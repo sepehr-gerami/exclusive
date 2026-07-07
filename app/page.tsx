@@ -15,7 +15,7 @@ import ServiceStrip from "@/features/services/ServiceStrip";
 export default function Home() {
   return (
     <main className="container mx-auto px-4">
-      <section className="flex flex-col gap-6 mt-5 items-stretch lg:flex-row">
+      <section className="flex flex-col gap-5 mt-5 items-stretch lg:flex-row">
         {/* Hide on mobile, show on desktop */}
         <div className="hidden lg:block lg:w-1/5">
           <CategorySidebar />
@@ -29,9 +29,7 @@ export default function Home() {
       </section>
 
       {/* Mobile-only category sidebar */}
-      <div className="lg:hidden mb-6">
-        <CategorySidebar />
-      </div>
+
 
       <Suspense fallback={<FlashSaleSkeleton />}>
         <FlashSalesServer />

@@ -15,7 +15,7 @@ export default function AuthPageShell({ title, subtitle, children, footer }: Pro
   return (
     <div className="min-h-screen bg-white">
       <div className="grid min-h-screen grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="relative overflow-hidden bg-[#f7f7f7] p-6">
+        <div className="relative hidden overflow-hidden bg-[#f7f7f7] p-6 lg:block">
           <div className="absolute inset-0 bg-linear-to-br from-red-50 via-white to-slate-50" />
           <div className="relative h-full flex items-center justify-center">
             <div className="max-w-lg rounded-4xl overflow-hidden shadow-xl">
@@ -33,11 +33,11 @@ export default function AuthPageShell({ title, subtitle, children, footer }: Pro
         <div className="flex flex-col items-center justify-center px-6 py-10 lg:px-12">
           <div className="w-full max-w-md">
             <div className="mb-8 space-y-3 text-center">
-              <h1 className="text-4xl font-bold text-slate-900">{title}</h1>
+              <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">{title}</h1>
               <p className="text-sm text-slate-500">{subtitle}</p>
             </div>
 
-            <div className="rounded-[28px] border border-slate-200 bg-white p-8 shadow-sm">
+            <div className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-sm sm:p-8">
               {children}
             </div>
 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { NAV_LINKS } from "@/constants/nav-links";
+import CategorySidebar from "../layout/CategorySidebar";
 
 interface Props {
   mobile?: boolean;
@@ -36,6 +37,7 @@ export default function Navbar({ mobile = false }: Props) {
           )}
         </Link>
       ))}
+    
     </nav>
   );
 }

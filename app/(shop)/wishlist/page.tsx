@@ -51,7 +51,7 @@ if (!hydrated || loading) {
         <span className="text-black font-medium">wishlist</span>
       </div>
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-3xl font-bold">
+        <h2 className=" text-xl md:text-3xl font-bold">
           Wishlist ({items.length})
         </h2>
 
@@ -59,9 +59,9 @@ if (!hydrated || loading) {
           onClick={clearWishlist}
           className=" text-red-500 transition-all  rounded-2xl  hover:bg-red-50 hover:scale-98"
         >
-          <div className="flex flex-row items-center justify-center gap-4 cursor-pointer border border-gray-200  rounded-2xl py-2 px-2">
-            <span className=" text-2xl font-bold ">Move All To Bag</span>
-            <Trash2 size={22} />
+          <div className="flex flex-row items-center justify-center gap-4 cursor-pointer border   border-gray-200  rounded-2xl   md:py-2 px-2">
+            <span className=" text-sm md:text-2xl font-bold ">Move All To Bag</span>
+            <Trash2 size={22}  />
           </div>
         </button>
 

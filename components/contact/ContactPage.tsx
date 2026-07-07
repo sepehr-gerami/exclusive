@@ -278,7 +278,7 @@ export default function ContactPage() {
         <section className="flex flex-col px-6 py-10 sm:px-8">
 
             {/* Toasts */}
-            <div style={{ position: "fixed", top: "20px", right: "20px", zIndex: 9999, display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div style={{ position: "fixed", top: "20px", right: "20px", left: "20px", maxWidth: "360px", marginLeft: "auto", zIndex: 9999, display: "flex", flexDirection: "column", gap: "8px" }}>
                 {toasts.map(t => <ToastItem key={t.id} toast={t} onDismiss={removeToast} />)}
             </div>
 
@@ -291,7 +291,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
                 {/* ستون چپ */}
-                <div className="border border-gray-200 rounded-md shadow-sm p-8 flex flex-col gap-8">
+                <div className="border border-gray-200 rounded-md shadow-sm p-5 flex flex-col gap-8 sm:p-8">
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                             <div className="bg-red-500 rounded-full p-3">
@@ -317,8 +317,8 @@ export default function ContactPage() {
                 </div>
 
                 {/* ستون راست */}
-                <div className="col-span-2 flex flex-col gap-3 p-4">
-                    <div className="grid grid-cols-3 gap-4">
+                <div className="lg:col-span-2 flex flex-col gap-3 p-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                         {(["name", "email", "phone"] as ("name" | "email" | "phone")[]).map(k => (
                             <div key={k} id={"field-" + k}>
                                 <Field

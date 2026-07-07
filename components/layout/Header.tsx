@@ -17,13 +17,13 @@ export default function Header() {
 
   return (
     <>
-      <header className="mt-4 border-b border-gray-200 px-3 py-3 sm:mt-10 sm:px-5 sm:py-5">
+      <header className="mt-4 border-b border-gray-200 px-3 py-3  sm:mt-10 sm:px-5 sm:py-5">
         <div className="flex items-center justify-between gap-4">
 
           {/* Logo */}
           <Link
             href="/"
-            className="shrink-0 text-2xl font-bold lg:text-3xl"
+            className="shrink-0 mb-2 text-2xl font-bold lg:text-3xl"
           >
             Exclusive
           </Link>
@@ -37,30 +37,25 @@ export default function Header() {
           <div className="hidden items-center mx-5  gap-15 lg:flex">
 
             <SearchInput />
-          <div className="hidden items-center gap-1 lg:flex">
-            <Wishlist />
-            <Basket />
-            <UserAccount/>
-          </div>
+            <div className="hidden items-center gap-1 lg:flex">
+              <Wishlist />
+              <Basket />
+              <UserAccount />
+            </div>
 
           </div>
 
           {/* Mobile Right */}
-          <div className="flex items-center gap-1 lg:hidden">
+     
+          <div className="flex items-center gap-1 lg:hidden min-w-0">
             <Basket />
-
-            <button
-              type="button"
-              onClick={() => setSearchOpen((prev) => !prev)}
-              className="rounded-lg p-2 transition hover:bg-gray-100"
-            >
-              {searchOpen ? <X size={20} /> : <Search size={20} />}
-            </button>
-
+            <div className="min-w-0 max-w-45 flex-1">
+              <SearchInput />
+            </div>
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="rounded-lg p-2 transition hover:bg-gray-100"
+              className="rounded-lg p-2 transition hover:bg-gray-100 shrink-0"
             >
               <Menu size={22} />
             </button>
@@ -79,6 +74,8 @@ export default function Header() {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
       />
+
+
     </>
   );
 }
