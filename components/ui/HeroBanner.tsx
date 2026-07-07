@@ -64,7 +64,7 @@ export default function HeroBanner() {
 
                                     {banner.brand === "apple" && (
                                         <Image
-                                            src="/brand/apple.svg"
+                                            src="/brand/apple-black-logo-svgrepo-com.svg"
                                             alt="Apple"
                                             width={18}
                                             height={18}
@@ -74,7 +74,7 @@ export default function HeroBanner() {
 
                                     {banner.brand === "samsung" && (
                                         <Image
-                                            src="/brand/samsung.svg"
+                                            src="/brand/samsung-logo-svgrepo-com.svg"
                                             alt="Samsung"
                                             width={35}
                                             height={30}
@@ -84,7 +84,7 @@ export default function HeroBanner() {
 
                                     {banner.brand === "playstation" && (
                                         <Image
-                                            src="/brand/playstationportable.svg"
+                                            src="/brand/play-station-logo-svgrepo-com.svg"
                                             alt="PlayStation"
                                             width={22}
                                             height={22}
