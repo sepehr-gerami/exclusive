@@ -5,8 +5,8 @@ const fa = {
   shopNow: "همین حالا خرید کن",
 
   // Header
-  language: "فارسی",
-  searchPlaceholder: "جستجوی محصولات...",
+searchPlaceholder: "جستجوی محصولات...",
+search: "جستجو",
 
   // Navigation
   home: "خانه",

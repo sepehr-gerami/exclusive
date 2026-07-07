@@ -7,6 +7,7 @@ const en = {
   // Header
   language: "English",
   searchPlaceholder: "Search products...",
+search: "Search",
 
   // Navigation
   home: "Home",

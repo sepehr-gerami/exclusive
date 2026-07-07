@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, Search, X } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import Navbar from "@/components/nav/Navbar";
 import Wishlist from "@/features/wishlist/Wishlist";
@@ -12,7 +12,6 @@ import MobileMenu from "./MobileMenu";
 import UserAccount from "@/features/account/Account";
 
 export default function Header() {
-  const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -36,7 +35,7 @@ export default function Header() {
           {/* Desktop Right */}
           <div className="hidden items-center mx-5  gap-15 lg:flex">
 
-            <SearchInput />
+            <SearchInput instanceId="desktop" />
             <div className="hidden items-center gap-1 lg:flex">
               <Wishlist />
               <Basket />
@@ -46,11 +45,10 @@ export default function Header() {
           </div>
 
           {/* Mobile Right */}
-     
           <div className="flex items-center gap-1 lg:hidden min-w-0">
             <Basket />
             <div className="min-w-0 max-w-45 flex-1">
-              <SearchInput />
+              <SearchInput instanceId="mobile" />
             </div>
             <button
               type="button"
@@ -61,21 +59,12 @@ export default function Header() {
             </button>
           </div>
         </div>
-
-        {/* Mobile Search */}
-        {searchOpen && (
-          <div className="mt-4 lg:hidden">
-            <SearchInput />
-          </div>
-        )}
       </header>
 
       <MobileMenu
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
       />
-
-
     </>
   );
 }

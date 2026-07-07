@@ -8,10 +8,18 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, Search, X } from "lucide-react";
 import { Product } from "@/types/Product";
+import { useSearchUIStore } from "@/store/useSearchUIStore";
 import { getProducts } from "@/lib/api/Product";
-export default function SearchInput() {
 
 
+interface SearchInputProps {
+  instanceId?: "mobile" | "desktop";
+}
+
+export default function SearchInput({ instanceId }: SearchInputProps) {
+
+  const mobileOpenSignal = useSearchUIStore((state) => state.mobileOpenSignal);
+  const setMobileSearchActive = useSearchUIStore((state) => state.setMobileSearchActive);
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
@@ -19,6 +27,15 @@ export default function SearchInput() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  useEffect(() => {
+    if (instanceId !== "mobile" || mobileOpenSignal === 0) return;
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    const id = setTimeout(() => inputRef.current?.focus(), 350);
+
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mobileOpenSignal, instanceId]);
 
   useEffect(() => {
     getProducts().then(setProducts);
@@ -105,7 +122,13 @@ export default function SearchInput() {
         <input
           ref={inputRef}
           value={query}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => {
+            setIsOpen(true);
+            if (instanceId === "mobile") setMobileSearchActive(true);
+          }}
+          onBlur={() => {
+            if (instanceId === "mobile") setMobileSearchActive(false);
+          }}
           onChange={(e) => {
             setQuery(e.target.value);
             setIsOpen(true);
