@@ -39,7 +39,7 @@ export default function HeroBanner() {
                 loop
                 autoplay={{ delay: 7000 }}
                 pagination={{ clickable: true }}
-                className="hero-swiper h-50 overflow-hidden rounded-2xl bg-black sm:h-72 lg:h-96"
+                className="hero-swiper h-52 overflow-hidden rounded-2xl bg-black sm:h-72 lg:h-96"
             >
                 {banners.map((banner, index) => (
                     <SwiperSlide key={index} className="h-full">
