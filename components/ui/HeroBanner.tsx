@@ -96,17 +96,17 @@ export default function HeroBanner() {
 
 
                             {/* Right: Image */}
-                            <div className="relative  h-36 w-38  mb-4 shrink-0 sm:h-56 sm:w-56 lg:h-80 lg:w-80">
-                                <div className="absolute inset-0 animate-zoomSlow">
-                                    <Image
-                                        src={banner.image}
-                                        alt={banner.title}
-                                        fill
-                                        unoptimized
-                                        className="object-contain rounded-3xl pl-5"
-                                    />
-                                </div>
-                            </div>
+ <div className="relative mb-4 h-36 w-36 shrink-0 overflow-hidden rounded-3xl bg-white sm:h-56 sm:w-56 lg:h-80 lg:w-80">
+  <div className="absolute inset-0 animate-zoomSlow">
+    <Image
+      src={banner.image}
+      alt={banner.title}
+      fill
+      unoptimized
+      className="object-contain p-6"
+    />
+  </div>
+</div>
                         </div>
                     </SwiperSlide>
                 ))}
