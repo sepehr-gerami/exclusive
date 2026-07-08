@@ -1,17 +1,8 @@
-import en from "@/locales/en";
-import fa from "@/locales/fa";
+// hooks/useTranslation.ts
 import { useLanguageStore } from "@/store/languageStore";
-
-const translations = {
-  en,
-  fa,
-};
+import { translations } from "@/lib/i18n/translations";
 
 export function useTranslation() {
   const language = useLanguageStore((state) => state.language);
-
-  return {
-    t: translations[language],
-    language,
-  };
+  return { t: translations[language], language };
 }

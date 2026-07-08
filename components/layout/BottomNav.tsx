@@ -3,32 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Home, LayoutGrid, Search, Heart, User } from "lucide-react";
+import { Home, Search, Heart, User, ShoppingBag } from "lucide-react";
 import { useWishlistStore } from "@/store/useWishlistStore";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useSearchUIStore } from "@/store/useSearchUIStore";
 
-
-function ActiveIndicator() {
-  return (
-    <motion.span
-      layoutId="bottomNavIndicator"
-       className="absolute top-0 left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full bg-gray-500/75"
-      transition={{ type: "spring", stiffness: 350, damping: 15 }}
-    />
-  );
-}
-
-const pulse = {
-  scale: [1, 1.20, 1],
-};
-
-const pulseTransition = {
-  duration: 1.5,
-  repeat: Infinity,
-  repeatType: "loop" as const,
-  ease: "easeInOut" as const,
-};
+const TABS = [
+  { key: "home", href: "/", icon: Home },
+  { key: "cart", href: "/cart", icon: ShoppingBag },
+  { key: "search", href: null, icon: Search }, // handled specially
+  { key: "wishlist", href: "/wishlist", icon: Heart },
+  { key: "account", href: "/account", icon: User },
+] as const;
 
 export default function BottomNav() {
   const pathname = usePathname();
@@ -38,120 +24,77 @@ export default function BottomNav() {
   const requestMobileOpen = useSearchUIStore((state) => state.requestMobileOpen);
   const mobileSearchActive = useSearchUIStore((state) => state.mobileSearchActive);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isActive = (href: string | null) => {
+    if (href === null) return mobileSearchActive;
+    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  };
+
+  const activeIndex = TABS.findIndex((tab) => isActive(tab.href));
 
   const iconColor = (active: boolean) => (active ? "text-black" : "text-gray-500");
-  const labelColor = (active: boolean ) =>
-    active ? "font-bold  transition-all text-[12px] text-gray-800" : "text-gray-500";
+  const labelColor = (active: boolean) =>
+    active ? "font-bold transition-all text-[12px] text-gray-800" : "text-gray-500";
 
   return (
     <nav
       className="fixed inset-x-0 bottom-0 z-50 border-t border-gray-200 bg-white lg:hidden"
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
-      <ul className="grid h-16 grid-cols-5">
-        {/* Home */}
-        <li className="relative flex">
-          {isActive("/") && <ActiveIndicator />}
-          <Link
-            href="/"
-            className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
-          >
-            <motion.span
-              animate={isActive("/") ? pulse : { scale: 1 }}
-              whileTap={{ scale: 0.82 }}
-            >
-              <Home size={22} strokeWidth={1.75} className={iconColor(isActive("/"))} />
-            </motion.span>
-            <span className={labelColor(isActive("/"))}>{t.home}</span>
-          </Link>
-        </li>
+      <div className="relative grid h-16 grid-cols-5">
+        {/* Single shared indicator — slides via transform, never unmounts */}
+        {activeIndex !== -1 && (
+          <motion.span
+            className="absolute top-0 h-0.5 w-8 rounded-full bg-gray-500/75"
+            style={{ left: `calc(${activeIndex} * (100% / 5) + (100% / 10) - 16px)` }}
+            animate={{ left: `calc(${activeIndex} * (100% / 5) + (100% / 10) - 16px)` }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+          />
+        )}
 
-        {/* Categories */}
-        <li className="relative flex">
-          {isActive("/product") && <ActiveIndicator />}
-          <Link
-            href="/product"
-            className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
-          >
-            <motion.span
-              animate={isActive("/product") ? pulse : { scale: 1 }}
-              whileTap={{ scale: 0.82 }}
-            >
-              <LayoutGrid
-                size={22}
-                strokeWidth={1.75}
-                className={iconColor(isActive("/product"))}
-              />
-            </motion.span>
-            <span className={labelColor(isActive("/product"))}>{t.categories}</span>
-          </Link>
-        </li>
+        {TABS.map((tab, i) => {
+          const active = i === activeIndex;
+          const content = (
+            <>
+              <motion.span
+                initial={false}
+                animate={active ? { scale: 1.15 } : { scale: 1 }}
+                whileTap={{ scale: 0.82 }}
+                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                className="relative flex items-center justify-center"
+              >
+                <tab.icon size={22} strokeWidth={1.75} className={iconColor(active)} />
+                {tab.key === "wishlist" && wishlistHydrated && wishlistCount > 0 && (
+                  <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gray-800 text-[9px] font-semibold text-white">
+                    {wishlistCount}
+                  </span>
+                )}
+              </motion.span>
+         <span className={labelColor(active)}>{t.nav[tab.key]}</span>
+            </>
+          );
 
-        {/* Search — scrolls up and focuses the search input instead of navigating */}
-        <li className="relative flex">
-          {mobileSearchActive && <ActiveIndicator />}
-          <button
-            type="button"
-            onClick={requestMobileOpen}
-            className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
-          >
-            <motion.span
-              animate={mobileSearchActive ? pulse : { scale: 1 }}
-              transition={pulseTransition}
-              whileTap={{ scale: 0.78 }}
-            >
-              <Search size={22} strokeWidth={2} className={iconColor(mobileSearchActive)} />
-            </motion.span>
-            <span className={labelColor(mobileSearchActive)}>{t.search}</span>
-          </button>
-        </li>
-
-        {/* Wishlist */}
-        <li className="relative flex">
-          {isActive("/wishlist") && <ActiveIndicator />}
-          <Link
-            href="/wishlist"
-            className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
-          >
-            <motion.span
-              animate={isActive("/wishlist") ? pulse : { scale: 1 }}
-              whileTap={{ scale: 0.82 }}
-              className="relative flex items-center justify-center"
-            >
-              <Heart
-                size={22}
-                strokeWidth={1.75}
-                className={iconColor(isActive("/wishlist"))}
-              />
-              {wishlistHydrated && wishlistCount > 0 && (
-                <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-gray-800 text-[9px] font-semibold text-white">
-                  {wishlistCount}
-                </span>
+          return (
+            <li key={tab.key} className="relative flex list-none">
+              {tab.href === null ? (
+                <button
+                  type="button"
+                  onClick={requestMobileOpen}
+                  className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
+                >
+                  {content}
+                </button>
+              ) : (
+                <Link
+                  href={tab.href}
+                  className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
+                >
+                  {content}
+                </Link>
               )}
-            </motion.span>
-            <span className={labelColor(isActive("/wishlist"))}>{t.wishlist}</span>
-          </Link>
-        </li>
-
-        {/* Account */}
-        <li className="relative flex">
-          {isActive("/account") && <ActiveIndicator />}
-          <Link
-            href="/account"
-            className="flex h-full w-full flex-col items-center justify-center gap-1 text-[11px]"
-          >
-            <motion.span
-              animate={isActive("/account") ? pulse : { scale: 1 }}
-              whileTap={{ scale: 0.82 }}
-            >
-              <User size={22} strokeWidth={1.75} className={iconColor(isActive("/account"))} />
-            </motion.span>
-            <span className={labelColor(isActive("/account"))}>{t.account}</span>
-          </Link>
-        </li>
-      </ul>
+            </li>
+          );
+        })}
+      </div>
     </nav>
   );
 }
