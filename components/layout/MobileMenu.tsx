@@ -7,7 +7,7 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { categories } from "@/data/categories";
 import { AnimatePresence, motion } from "framer-motion";
-
+import  BottomFooterMobileMenu  from "@/components/ui/BottomMobileMenu/BottomFooterMobileMenu";
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
@@ -19,15 +19,18 @@ export default function MobileMenu({
 }: MobileMenuProps) {
   const [categoryOpen, setCategoryOpen] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
   if (open) {
     document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
   } else {
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
   }
 
   return () => {
     document.body.style.overflow = "";
+    document.documentElement.style.overflow = "";
   };
 }, [open]);
   return (
@@ -41,11 +44,14 @@ export default function MobileMenu({
   />
 
   {/* Drawer */}
-  <aside
-    className={`fixed right-0 top-0 z-50 h-screen w-[60%] max-w-sm overflow-y-auto rounded-l-3xl bg-linear-to-b from-white to-gray-50 shadow-[0_10px_60px_rgba(0,0,0,.18)] transition-transform duration-300  ${
-      open ? "translate-x-0" : "translate-x-full"
-    }`}
-  >
+ <aside
+  className={`fixed right-0 top-0 z-50 flex h-dvh w-[60%] max-w-sm flex-col
+  overflow-hidden rounded-l-3xl
+  bg-linear-to-b from-white to-gray-50
+  shadow-[0_10px_60px_rgba(0,0,0,.18)]
+  transition-transform duration-300
+  ${open ? "translate-x-0" : "translate-x-full"}`}
+>
     {/* Header */}
     <div className="sticky top-0 z-10 flex items-center justify-between border-b bg-white/80 px-6 py-5 backdrop-blur-xl">
       <div>
@@ -64,7 +70,7 @@ export default function MobileMenu({
     </div>
 
     {/* Navigation */}
-    <nav className="space-y-2 p-4">
+    <nav className="flex-1 overflow-y-auto overscroll-contain space-y-2 p-4">
       {NAV_LINKS.map((link) => (
         <Link
           key={link.href}
@@ -120,17 +126,9 @@ export default function MobileMenu({
     </nav>
 
     {/* Footer */}
-    <div className="mt-auto border-t p-4">
-      <div className="rounded-2xl bg-black p-5 text-white">
-        <h3 className="font-semibold">
-          Welcome to Exclusive
-        </h3>
-
-        <p className="mt-2 text-sm text-white/70">
-          Discover thousands of premium products.
-        </p>
-      </div>
-    </div>
+   <div className=" p-3 shrink-0">
+  <BottomFooterMobileMenu />
+</div>
   </aside>
     </>
   );

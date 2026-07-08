@@ -34,3 +34,40 @@ html, body {
   background: #DB4444;
   box-shadow: 0 0 12px rgba(219, 68, 68, 0.45);
 }
+.menu-footer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-footer-btn::before {
+  content: "";
+  position: absolute;
+  top: 7%;
+  left: -40%;
+  width: 24px;
+  height: 86%;
+  opacity: 0;
+  background: white;
+  box-shadow: 0 0 50px 30px white;
+  transform: skewX(-20deg);
+}
+
+.menu-footer-btn:hover::before {
+  animation: menuShine .5s linear;
+}
+
+@keyframes menuShine {
+  from {
+    left: -40%;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    left: 140%;
+    opacity: 0;
+  }
+}

@@ -155,7 +155,7 @@ export default function LoginPage() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-2 gap-3">
+         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
                 {/* TOASTS */}
                 <div className="fixed top-4 right-4 space-y-2 z-50">
@@ -174,7 +174,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* LEFT IMAGE */}
-                <div className="flex flex-col">
+              <div className="hidden lg:flex flex-col">
                     <div className="overflow-hidden rounded-md group">
                         <Image
                             src={AuthImage}
@@ -187,10 +187,10 @@ export default function LoginPage() {
                 </div>
 
                 {/* FORM */}
-                <div className="flex flex-col items-center justify-center gap-6 ">
+                <div className="flex flex-col justify-center gap-6 px-6 py-10 lg:px-0">
 
-                    <div className="flex flex-col gap-5">
-                        <h2 className="font-bold text-3xl">
+                    <div className="flex flex-col gap-4 w-full max-w-md">
+                       <h2 className="text-3xl lg:text-4xl font-bold">
                             Log in to Exclusive
                         </h2>
                         <p className="text-gray-500">
@@ -198,8 +198,7 @@ export default function LoginPage() {
                         </p>
                     </div>
 
-                    <div className="flex flex-col gap-4 mt-3">
-
+                 <div className="flex flex-col gap-4 mt-3 w-full max-w-md">
 
                         {/* EMAIL */}
                         <input
@@ -210,6 +209,8 @@ export default function LoginPage() {
                                 handleChange("email", e.target.value)
                             }
                             className="
+                            w-full
+
 outline-none
 focus:ring-0
 p-[1em]
@@ -241,7 +242,8 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
                                     onChange={(e) =>
                                         handleChange("password", e.target.value)
                                     }
-                                    className="
+                                    className="w-full
+
 outline-none
 focus:ring-0
 p-[1em]
@@ -273,8 +275,14 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
 
                     </div>
 
-                    <div className="flex flex-row items-center justify-center gap-15">
+                   <div className="flex flex-row sm:flex-row items-center justify-between w-full max-w-md gap-5 mt-4">
 
+                        <Link
+                            href={"/reset-password"}
+                            className=" text-red-500 mt-4"
+                        >
+                            Forget Password?
+                        </Link>
                         <div className="flex flex-col gap-6 mt-6 items-center">
                             <LoadingButton
                                 isLoading={loading}
@@ -283,12 +291,6 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
                             />
 
                         </div>
-                        <Link
-                            href={"/reset-password"}
-                            className=" text-red-500 mt-4"
-                        >
-                            Forget Password?
-                        </Link>
                     </div>
                 </div>
             </div>

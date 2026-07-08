@@ -180,13 +180,13 @@ export default function SignUpPage() {
               width={805}
               height={781}
               alt="Auth Image"
-              className="object-cover transition-all  my-8 duration-700 ease-out scale-100 brightness-100 group-hover:scale-102 group-hover:brightness-75"
+              className=" hidden md:object-cover transition-all  my-8 duration-700 ease-out scale-100 brightness-100 group-hover:scale-102 group-hover:brightness-75"
             />
           </div>
         </div>
 
         {/* FORM */}
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="flex flex-col  items-center justify-center gap-6">
 
           <div className="flex flex-col gap-5">
             <h2 className="font-bold text-3xl">
@@ -308,13 +308,13 @@ rounded-3xl border border-slate-200 bg-slate-50 px-4 py-3 focus:border-red-500 f
               text="Create Account"
             />
 
-            <button className="border border-gray-300 py-3 px-6 flex font-semibold items-center gap-5">
+            <button className="border border-gray-300 rounded-4xl py-3 px-6 flex font-semibold items-center gap-5">
               <FcGoogle size={25} />
               Sign up with Google
             </button>
           </div>
 
-          <span className="text-gray-500">
+          <span className="text-gray-500 pb-5">
             Already have account?{" "}
             <Link
               href={"/login"}
